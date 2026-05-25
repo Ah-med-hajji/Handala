@@ -9,7 +9,10 @@ export const metadata: Metadata = {
   title: 'ناجي العلي – حنظلة | أرشيف رقمي',
   description: 'أرشيف رقمي لأعمال الفنان الفلسطيني ناجي العلي | Digital archive of Palestinian cartoonist Naji Al-Ali',
   icons: {
-    icon: '/favicon.svg',
+    icon: [
+      { url: '/favicon.png', type: 'image/png', sizes: '32x32' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
   },
 };
 
