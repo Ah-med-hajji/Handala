@@ -8,9 +8,6 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-latin', display: 'sw
 export const metadata: Metadata = {
   title: 'ناجي العلي – حنظلة | أرشيف رقمي',
   description: 'أرشيف رقمي لأعمال الفنان الفلسطيني ناجي العلي | Digital archive of Palestinian cartoonist Naji Al-Ali',
-  icons: {
-    icon: '/favicon.ico',
-  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
