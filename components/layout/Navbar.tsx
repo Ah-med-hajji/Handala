@@ -83,9 +83,9 @@ export default function Navbar({ locale }: NavbarProps) {
           <div className="flex items-center gap-2 shrink-0">
             <Link
               href={otherLocalePath}
-              className="text-xs font-medium bg-card border border-border px-3 py-1 rounded-full text-text-muted hover:text-white hover:border-accent transition-colors"
+              className="text-xs font-bold bg-accent/10 border border-accent/60 px-3 py-1.5 rounded-full text-accent hover:bg-accent hover:text-black transition-colors tracking-wide"
             >
-              {isAr ? 'EN' : 'AR'}
+              {isAr ? 'EN' : 'ع'}
             </Link>
             <button
               aria-label={isAr ? 'فتح القائمة' : 'Open menu'}
@@ -141,9 +141,10 @@ export default function Navbar({ locale }: NavbarProps) {
               <Link
                 href={otherLocalePath}
                 onClick={() => setMobileOpen(false)}
-                className="text-sm text-text-muted hover:text-white transition-colors"
+                className="inline-flex items-center gap-2 text-sm font-bold bg-accent/10 border border-accent/60 px-4 py-2 rounded-full text-accent hover:bg-accent hover:text-black transition-colors"
               >
-                {isAr ? 'English' : 'العربية'}
+                <span>{isAr ? 'EN' : 'ع'}</span>
+                <span className="font-normal">{isAr ? 'English' : 'العربية'}</span>
               </Link>
             </div>
           </div>
