@@ -1,16 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120" width="100" height="120">
   <rect width="100" height="120" rx="14" fill="#0a0a0a"/>
   <g fill="none" stroke="#c8a96e" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
-    <!-- head -->
     <circle cx="50" cy="22" r="16"/>
-    <!-- body sides -->
     <path d="M34 38 C28 55 26 75 30 95"/>
     <path d="M66 38 C72 55 74 75 70 95"/>
-    <!-- shoulders -->
     <path d="M34 38 Q50 52 66 38"/>
-    <!-- feet -->
     <path d="M30 95 Q50 105 70 95"/>
-    <!-- jacket / coat -->
     <path d="M34 60 Q22 65 16 80 Q50 88 84 80 Q78 65 66 60"/>
   </g>
 </svg>
