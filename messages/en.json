@@ -1,0 +1,101 @@
+{
+  "nav": {
+    "home": "Home",
+    "categories": "Categories",
+    "videos": "Videos",
+    "sendCartoon": "Send a Cartoon",
+    "aboutSite": "About Site",
+    "aboutNaji": "About Naji",
+    "supporters": "Supporters"
+  },
+  "home": {
+    "searchPlaceholder": "Search cartoons...",
+    "allCartoons": "All Cartoons",
+    "categories": "Categories"
+  },
+  "category": {
+    "cartoons": "cartoons",
+    "sortNewest": "Newest",
+    "sortOldest": "Oldest",
+    "sort": "Sort:",
+    "prev": "Previous",
+    "next": "Next",
+    "pageOf": "Page {current} of {total}",
+    "noCartoons": "No cartoons in this category"
+  },
+  "cartoon": {
+    "publishedOn": "Published on",
+    "source": "Source",
+    "categories": "Categories",
+    "tags": "Tags",
+    "description": "Description & Analysis",
+    "noDescription": "No description available yet",
+    "share": "Share this work",
+    "copyLink": "Copy link",
+    "shareTwitter": "Share on X",
+    "shareWhatsapp": "Share on WhatsApp",
+    "relatedWorks": "Related Works",
+    "zoom": "Zoom",
+    "arabic": "Arabic",
+    "english": "English",
+    "linkCopied": "Link copied!"
+  },
+  "search": {
+    "title": "Search Results",
+    "results": "{count} results for \"{query}\"",
+    "noResults": "No results found",
+    "noResultsHint": "Try different keywords",
+    "categoryMatch": "Category Match",
+    "viewCategory": "View Category",
+    "minChars": "Enter at least 2 characters to search"
+  },
+  "videos": {
+    "title": "Videos",
+    "noVideos": "No videos available"
+  },
+  "sendCartoon": {
+    "title": "Send a Cartoon",
+    "description": "Do you have a Naji Al-Ali cartoon? Share it with us to be added to the archive after review.",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message (optional)",
+    "image": "Image (optional)",
+    "submit": "Submit",
+    "success": "Thank you for your contribution! We'll review your submission soon.",
+    "error": "An error occurred. Please try again.",
+    "uploading": "Uploading..."
+  },
+  "aboutSite": {
+    "title": "About the Site",
+    "mission": "Our Mission",
+    "missionText": "To archive and protect Naji Al-Ali's visual legacy, and present it to new generations in an organized and accessible way, while preserving its political and cultural context.",
+    "why": "Why this archive?",
+    "whyText": "Naji Al-Ali is one of the most prominent Arab artists who used cartoons as a tool of resistance and expression. His drawings represent an invaluable historical document that must be preserved and made available to the world."
+  },
+  "aboutNaji": {
+    "title": "About Naji Al-Ali",
+    "born": "Born in 1937 in Al-Shajara village, Palestine",
+    "died": "Assassinated in 1987 in London",
+    "bio": "Naji Al-Ali is a Palestinian cartoonist considered one of the most prominent artists in Arab history. During his career, he drew more than forty thousand cartoons published in many Arab newspapers. He created the famous character Handala, a symbol of the Palestinian refugee child."
+  },
+  "supporters": {
+    "title": "Supporters",
+    "thanks": "Our gratitude to all who contributed to preserving this legacy."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "returnHome": "Return Home",
+    "notFound": "Page not found",
+    "close": "Close",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "viewSite": "View Site"
+  },
+  "footer": {
+    "tagline": "Digital Archive of Naji Al-Ali's Works",
+    "copyright": "© All rights reserved"
+  }
+}
