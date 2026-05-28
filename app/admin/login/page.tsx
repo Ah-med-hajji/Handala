@@ -24,7 +24,7 @@ export default function AdminLoginPage() {
         body: JSON.stringify({ password }),
       });
       if (res.ok) {
-        router.push('/admin');
+        window.location.href = '/admin';
       } else {
         setError('Invalid credentials — use password: admin123');
         setLoading(false);
@@ -38,7 +38,7 @@ export default function AdminLoginPage() {
       setError('Invalid credentials');
       setLoading(false);
     } else {
-      router.push('/admin');
+      window.location.href = '/admin';
     }
   }
 
