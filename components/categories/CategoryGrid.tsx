@@ -11,10 +11,10 @@ export default function CategoryGrid({ categories, locale }: CategoryGridProps) 
   const isAr = locale === 'ar';
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-[6px] px-[6px] pb-[6px]">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4 pb-4">
       <Link
         href={`/${locale}/categories/all`}
-        className="group relative block overflow-hidden bg-card"
+        className="group relative block overflow-hidden rounded-xl bg-card"
       >
         <div className="aspect-video relative flex items-center justify-center bg-gradient-to-br from-card to-[#111]">
           <svg

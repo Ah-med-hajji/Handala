@@ -14,7 +14,7 @@ export default function CategoryCard({ category, locale }: CategoryCardProps) {
   return (
     <Link
       href={`/${locale}/categories/${category.slug}`}
-      className="group relative block overflow-hidden bg-card"
+      className="group relative block overflow-hidden rounded-xl bg-card"
     >
       <div className="aspect-video relative">
         {category.cover_image_url ? (
@@ -23,7 +23,7 @@ export default function CategoryCard({ category, locale }: CategoryCardProps) {
             alt={name}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
-            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 20vw"
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
           />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-card to-[#111] flex items-center justify-center">
