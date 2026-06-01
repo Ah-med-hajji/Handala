@@ -27,7 +27,7 @@ export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProp
     setCurrent(c => (c - 1 + slides.length) % slides.length);
   }, [slides.length]);
 
-  // Reset interval after every slide change (manual or auto) so next advance is always 5s away
+  // Restart timer after every slide change so manual clicks reset the 5s window
   useEffect(() => {
     if (paused) return;
     const id = setInterval(goNext, 5000);
@@ -45,7 +45,7 @@ export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProp
     }
   };
 
-  // In RTL, the left arrow visually means "forward" (next slide)
+  // In RTL the left arrow visually means "forward" (next slide)
   const leftArrowAction = isRTL ? goNext : goPrev;
   const rightArrowAction = isRTL ? goPrev : goNext;
 
@@ -57,8 +57,11 @@ export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProp
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Slide container */}
-      <div className="relative w-full overflow-hidden" style={{ aspectRatio: '4/1' }}>
+      {/* Slide container — padding-bottom gives reliable aspect ratio across all browsers */}
+      {/* Images are 1600×649 ≈ 40.56% tall relative to width */}
+      <div className="relative w-full overflow-hidden">
+        <div style={{ paddingBottom: '40.5625%' }} />
+
         {slides.map((slide, i) => (
           <div
             key={i}
@@ -78,11 +81,11 @@ export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProp
           </div>
         ))}
 
-        {/* Edge vignettes to blend into page background */}
+        {/* Edge vignettes */}
         <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background/75 to-transparent pointer-events-none z-10" />
         <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background/75 to-transparent pointer-events-none z-10" />
 
-        {/* Left arrow — desktop only, visible on hover */}
+        {/* Left arrow — desktop only, shows on hover */}
         <button
           onClick={leftArrowAction}
           aria-label="Previous"
@@ -93,7 +96,7 @@ export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProp
           </svg>
         </button>
 
-        {/* Right arrow — desktop only, visible on hover */}
+        {/* Right arrow — desktop only, shows on hover */}
         <button
           onClick={rightArrowAction}
           aria-label="Next"
