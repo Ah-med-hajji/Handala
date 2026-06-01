@@ -13,6 +13,10 @@ interface HeroCarouselProps {
   locale?: string;
 }
 
+// Largest image height among the three slides (1600×676)
+const IMG_W = 1600;
+const IMG_H = 676;
+
 export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProps) {
   const isRTL = locale === 'ar';
   const [current, setCurrent] = useState(0);
@@ -27,7 +31,7 @@ export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProp
     setCurrent(c => (c - 1 + slides.length) % slides.length);
   }, [slides.length]);
 
-  // Restart timer after every slide change so manual clicks reset the 5s window
+  // Restarting the interval on every slide change resets the 5s window after manual clicks
   useEffect(() => {
     if (paused) return;
     const id = setInterval(goNext, 5000);
@@ -45,7 +49,6 @@ export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProp
     }
   };
 
-  // In RTL the left arrow visually means "forward" (next slide)
   const leftArrowAction = isRTL ? goNext : goPrev;
   const rightArrowAction = isRTL ? goPrev : goNext;
 
@@ -57,24 +60,25 @@ export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProp
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Slide container — padding-bottom gives reliable aspect ratio across all browsers */}
-      {/* Images are 1600×649 ≈ 40.56% tall relative to width */}
+      {/*
+        Slide 0 is in normal flow (block) — its natural image height sizes the container.
+        Slides 1+ are absolute and overlay slide 0. No aspect-ratio / fill needed.
+      */}
       <div className="relative w-full overflow-hidden">
-        <div style={{ paddingBottom: '40.5625%' }} />
-
         {slides.map((slide, i) => (
           <div
             key={i}
             aria-hidden={i !== current}
-            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-              i === current ? 'opacity-100' : 'opacity-0 pointer-events-none'
-            }`}
+            className={`w-full transition-opacity duration-700 ease-in-out ${
+              i === 0 ? 'block' : 'absolute top-0 left-0 h-full'
+            } ${i === current ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
           >
             <Image
               src={slide.src}
               alt={slide.alt}
-              fill
-              className="object-cover"
+              width={IMG_W}
+              height={IMG_H}
+              className="w-full h-auto block"
               priority
               sizes="100vw"
             />
@@ -85,7 +89,7 @@ export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProp
         <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background/75 to-transparent pointer-events-none z-10" />
         <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background/75 to-transparent pointer-events-none z-10" />
 
-        {/* Left arrow — desktop only, shows on hover */}
+        {/* Left arrow */}
         <button
           onClick={leftArrowAction}
           aria-label="Previous"
@@ -96,7 +100,7 @@ export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProp
           </svg>
         </button>
 
-        {/* Right arrow — desktop only, shows on hover */}
+        {/* Right arrow */}
         <button
           onClick={rightArrowAction}
           aria-label="Next"
