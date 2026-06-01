@@ -38,19 +38,20 @@ export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProp
 
   return (
     <div
-      className="group w-full"
+      className="group w-full max-w-5xl mx-auto px-4"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Single-slide render — no stacking, no opacity tricks */}
-      <div className="relative w-full overflow-hidden h-[220px] sm:h-[320px] lg:h-[400px]">
+      <div className="relative w-full overflow-hidden rounded-xl h-[220px] sm:h-[320px] lg:h-[400px]">
+        {/* key={current} remounts the img on every slide change, triggering the fade-in animation */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          key={current}
           src={slides[current].src}
           alt={slides[current].alt}
-          className="w-full h-full object-cover block"
+          className="w-full h-full object-cover block animate-fade-in"
         />
 
         {/* Edge vignettes */}
