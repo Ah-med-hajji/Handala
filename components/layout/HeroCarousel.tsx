@@ -18,13 +18,8 @@ export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProp
   const [paused, setPaused] = useState(false);
   const touchStartX = useRef<number>(0);
 
-  const goNext = useCallback(() => {
-    setCurrent(c => (c + 1) % slides.length);
-  }, [slides.length]);
-
-  const goPrev = useCallback(() => {
-    setCurrent(c => (c - 1 + slides.length) % slides.length);
-  }, [slides.length]);
+  const goNext = useCallback(() => setCurrent(c => (c + 1) % slides.length), [slides.length]);
+  const goPrev = useCallback(() => setCurrent(c => (c - 1 + slides.length) % slides.length), [slides.length]);
 
   useEffect(() => {
     if (paused) return;
@@ -32,15 +27,10 @@ export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProp
     return () => clearInterval(id);
   }, [paused, current, goNext]);
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
+  const handleTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
   const handleTouchEnd = (e: React.TouchEvent) => {
     const delta = touchStartX.current - e.changedTouches[0].clientX;
-    if (Math.abs(delta) > 50) {
-      delta > 0 ? goNext() : goPrev();
-    }
+    if (Math.abs(delta) > 50) delta > 0 ? goNext() : goPrev();
   };
 
   const leftArrowAction = isRTL ? goNext : goPrev;
@@ -54,26 +44,14 @@ export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProp
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
+      {/* Single-slide render — no stacking, no opacity tricks */}
       <div className="relative w-full overflow-hidden">
-        {/* Slide 0 in normal flow → its height sizes the container */}
-        {slides.map((slide, i) => (
-          <div
-            key={i}
-            aria-hidden={i !== current}
-            className={`w-full transition-opacity duration-700 ease-in-out ${
-              i === 0 ? 'block' : 'absolute top-0 left-0 w-full'
-            } ${i === current ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-          >
-            {/* Plain img — bypasses Next.js optimization to confirm images load */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={slide.src}
-              alt={slide.alt}
-              className="w-full h-auto block"
-              loading={i === 0 ? 'eager' : 'lazy'}
-            />
-          </div>
-        ))}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={slides[current].src}
+          alt={slides[current].alt}
+          className="w-full h-auto block"
+        />
 
         {/* Edge vignettes */}
         <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background/75 to-transparent pointer-events-none z-10" />
@@ -110,9 +88,7 @@ export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProp
             onClick={() => setCurrent(i)}
             aria-label={`Slide ${i + 1}`}
             className={`rounded-full transition-all duration-300 ${
-              i === current
-                ? 'w-4 h-2 bg-accent'
-                : 'w-2 h-2 bg-[#555] hover:bg-[#888]'
+              i === current ? 'w-4 h-2 bg-accent' : 'w-2 h-2 bg-[#555] hover:bg-[#888]'
             }`}
           />
         ))}
