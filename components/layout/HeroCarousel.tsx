@@ -45,12 +45,12 @@ export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProp
       onTouchEnd={handleTouchEnd}
     >
       {/* Single-slide render — no stacking, no opacity tricks */}
-      <div className="relative w-full overflow-hidden">
+      <div className="relative w-full overflow-hidden h-[220px] sm:h-[320px] lg:h-[400px]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={slides[current].src}
           alt={slides[current].alt}
-          className="w-full h-auto block"
+          className="w-full h-full object-cover block"
         />
 
         {/* Edge vignettes */}
