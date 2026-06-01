@@ -24,11 +24,21 @@ const config: Config = {
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
+        'ken-burns': 'kenBurns 6s linear forwards',
+        'progress-fill': 'progressFill 5s linear forwards',
       },
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
+        },
+        kenBurns: {
+          '0%': { transform: 'scale(1)' },
+          '100%': { transform: 'scale(1.05)' },
+        },
+        progressFill: {
+          '0%': { width: '0%' },
+          '100%': { width: '100%' },
         },
       },
     },
