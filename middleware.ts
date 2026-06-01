@@ -45,5 +45,8 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+  // Exclude: API routes, Next.js internals, and any path with a file extension
+  // (static assets like .jpeg/.png/.svg etc. must not go through intlMiddleware
+  // or next-intl will redirect /carrousel/1.jpeg → /ar/carrousel/1.jpeg → 404)
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)',],
 };
