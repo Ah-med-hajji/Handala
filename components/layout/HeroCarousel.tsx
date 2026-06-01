@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import Image from 'next/image';
 
 interface Slide {
   src: string;
@@ -12,10 +11,6 @@ interface HeroCarouselProps {
   slides: Slide[];
   locale?: string;
 }
-
-// Largest image height among the three slides (1600×676)
-const IMG_W = 1600;
-const IMG_H = 676;
 
 export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProps) {
   const isRTL = locale === 'ar';
@@ -31,7 +26,6 @@ export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProp
     setCurrent(c => (c - 1 + slides.length) % slides.length);
   }, [slides.length]);
 
-  // Restarting the interval on every slide change resets the 5s window after manual clicks
   useEffect(() => {
     if (paused) return;
     const id = setInterval(goNext, 5000);
@@ -60,27 +54,23 @@ export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProp
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/*
-        Slide 0 is in normal flow (block) — its natural image height sizes the container.
-        Slides 1+ are absolute and overlay slide 0. No aspect-ratio / fill needed.
-      */}
       <div className="relative w-full overflow-hidden">
+        {/* Slide 0 in normal flow → its height sizes the container */}
         {slides.map((slide, i) => (
           <div
             key={i}
             aria-hidden={i !== current}
             className={`w-full transition-opacity duration-700 ease-in-out ${
-              i === 0 ? 'block' : 'absolute top-0 left-0 h-full'
+              i === 0 ? 'block' : 'absolute top-0 left-0 w-full'
             } ${i === current ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
           >
-            <Image
+            {/* Plain img — bypasses Next.js optimization to confirm images load */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={slide.src}
               alt={slide.alt}
-              width={IMG_W}
-              height={IMG_H}
               className="w-full h-auto block"
-              priority
-              sizes="100vw"
+              loading={i === 0 ? 'eager' : 'lazy'}
             />
           </div>
         ))}
