@@ -37,8 +37,8 @@ describe('MOCK_CATEGORIES', () => {
 });
 
 describe('MOCK_TAGS', () => {
-  it('has 98 entries', () => {
-    expect(MOCK_TAGS).toHaveLength(98);
+  it('has 83 entries', () => {
+    expect(MOCK_TAGS).toHaveLength(83);
   });
 
   it('all ids are unique', () => {
