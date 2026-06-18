@@ -68,12 +68,12 @@ export default function Navbar({ locale }: NavbarProps) {
             </span>
           </Link>
 
-          <nav className="hidden xl:flex items-center gap-1 flex-1 justify-center">
+          <nav className="hidden xl:flex items-center gap-0.5 flex-1 justify-start ms-4 me-2 min-w-0">
             {navLinks.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
-                className={`px-3 py-2 text-lg font-semibold rounded transition-colors whitespace-nowrap ${
+                className={`px-2 py-2 text-base font-semibold rounded transition-colors whitespace-nowrap ${
                   isActive(href)
                     ? 'text-accent border-b-2 border-accent pb-1'
                     : 'text-text-muted hover:text-white'
