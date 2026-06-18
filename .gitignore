@@ -30,6 +30,13 @@ yarn-error.log*
 # vercel
 .vercel
 
+# supabase CLI temp/local state
+/supabase/.temp/
+/supabase/.branches/
+
+# Windows WSL zone metadata
+*:Zone.Identifier
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

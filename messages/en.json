@@ -6,6 +6,8 @@
     "sendCartoon": "Send a Cartoon",
     "aboutSite": "About Site",
     "aboutNaji": "About Naji",
+    "byNaji": "By Naji Al-Ali",
+    "aboutAssassination": "The Assassination",
     "supporters": "Supporters"
   },
   "home": {
@@ -96,6 +98,6 @@
   },
   "footer": {
     "tagline": "Digital Archive of Naji Al-Ali's Works",
-    "copyright": "© All rights reserved"
+    "copyright": "Site created on the initiative of the Anti-Zionism and Racism Association – Jordan"
   }
 }

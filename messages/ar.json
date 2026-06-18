@@ -1,17 +1,19 @@
 {
   "nav": {
     "home": "الرئيسية",
-    "categories": "الموضوعات",
+    "categories": "التصنيفات",
     "videos": "فيديوهات",
     "sendCartoon": "أرسل رسمًا",
     "aboutSite": "عن الموقع",
     "aboutNaji": "عن ناجي العلي",
+    "byNaji": "بقلم ناجي العلي",
+    "aboutAssassination": "عن الاغتيال",
     "supporters": "الداعمون"
   },
   "home": {
     "searchPlaceholder": "ابحث في الرسومات...",
     "allCartoons": "جميع الرسومات",
-    "categories": "الموضوعات"
+    "categories": "التصنيفات"
   },
   "category": {
     "cartoons": "رسومات",
@@ -21,12 +23,12 @@
     "prev": "السابق",
     "next": "التالي",
     "pageOf": "صفحة {current} من {total}",
-    "noCartoons": "لا توجد رسومات في هذا الموضوع"
+    "noCartoons": "لا توجد رسومات في هذا التصنيف"
   },
   "cartoon": {
     "publishedOn": "نُشر في",
     "source": "المصدر",
-    "categories": "الموضوعات",
+    "categories": "التصنيفات",
     "tags": "الكلمات المفتاحية",
     "description": "الوصف والتحليل",
     "noDescription": "لا يوجد وصف متاح حاليًا",
@@ -45,8 +47,8 @@
     "results": "{count} نتائج لـ «{query}»",
     "noResults": "لم يتم العثور على نتائج",
     "noResultsHint": "جرب كلمات مفتاحية مختلفة",
-    "categoryMatch": "موضوع مطابق",
-    "viewCategory": "عرض الموضوع",
+    "categoryMatch": "تصنيف مطابق",
+    "viewCategory": "عرض التصنيف",
     "minChars": "أدخل حرفين على الأقل للبحث"
   },
   "videos": {
@@ -96,6 +98,6 @@
   },
   "footer": {
     "tagline": "أرشيف رقمي لأعمال ناجي العلي",
-    "copyright": "© جميع الحقوق محفوظة"
+    "copyright": "أنشئ الموقع بمبادرة جمعية مناهضة الصهيونية والعنصرية – الأردن"
   }
 }
