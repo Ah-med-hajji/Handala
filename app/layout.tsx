@@ -10,10 +10,10 @@ export const metadata: Metadata = {
   description: 'أرشيف رقمي لأعمال الفنان الفلسطيني ناجي العلي | Digital archive of Palestinian cartoonist Naji Al-Ali',
   icons: {
     icon: [
-      { url: '/handala-logo.gif', type: 'image/gif' },
+      { url: '/handala-logo.png', type: 'image/png' },
     ],
-    shortcut: '/handala-logo.gif',
-    apple: '/handala-logo.gif',
+    shortcut: '/handala-logo.png',
+    apple: '/handala-logo.png',
   },
 };
 

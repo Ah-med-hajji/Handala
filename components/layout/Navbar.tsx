@@ -12,13 +12,13 @@ interface NavbarProps {
 function HandalaLogo({ size = 44 }: { size?: number }) {
   return (
     <Image
-      src="/handala-logo.gif"
+      src="/handala-logo.png"
       alt="Handala"
       width={size}
       height={size}
-      unoptimized
       priority
-      className="shrink-0"
+      className="shrink-0 object-contain"
+      style={{ height: size, width: 'auto' }}
     />
   );
 }
@@ -68,7 +68,7 @@ export default function Navbar({ locale }: NavbarProps) {
             </span>
           </Link>
 
-          <nav className="hidden xl:flex items-center gap-0.5 flex-1 justify-start ms-4 me-2 min-w-0">
+          <nav className="hidden xl:flex items-center gap-2 flex-1 justify-start ms-4 me-2 min-w-0">
             {navLinks.map(({ href, label }) => (
               <Link
                 key={href}
