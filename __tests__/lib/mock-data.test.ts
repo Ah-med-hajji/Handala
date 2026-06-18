@@ -37,8 +37,18 @@ describe('MOCK_CATEGORIES', () => {
 });
 
 describe('MOCK_TAGS', () => {
-  it('has 15 entries', () => {
-    expect(MOCK_TAGS).toHaveLength(15);
+  it('has 98 entries', () => {
+    expect(MOCK_TAGS).toHaveLength(98);
+  });
+
+  it('all ids are unique', () => {
+    const ids = MOCK_TAGS.map(t => t.id);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it('all slugs are unique', () => {
+    const slugs = MOCK_TAGS.map(t => t.slug);
+    expect(new Set(slugs).size).toBe(slugs.length);
   });
 
   it('every entry has required fields', () => {
