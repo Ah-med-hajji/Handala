@@ -37,6 +37,9 @@ yarn-error.log*
 # Windows WSL zone metadata
 *:Zone.Identifier
 
+# local-only working/reference docs
+/docs/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
