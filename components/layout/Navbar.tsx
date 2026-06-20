@@ -60,7 +60,7 @@ export default function Navbar({ locale }: NavbarProps) {
           scrolled ? 'bg-[#111]/95 backdrop-blur-sm shadow-lg' : 'bg-[#111]'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 h-20 flex items-center gap-4">
+        <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-center gap-6">
           <Link href={`/${locale}`} className="flex items-center gap-2 shrink-0">
             <HandalaLogo size={44} />
             <span className="font-bold text-white text-base leading-tight hidden sm:block">
@@ -68,7 +68,7 @@ export default function Navbar({ locale }: NavbarProps) {
             </span>
           </Link>
 
-          <nav className="hidden xl:flex items-center gap-2 flex-1 justify-start ms-4 me-2 min-w-0">
+          <nav className="hidden xl:flex items-center gap-2">
             {navLinks.map(({ href, label }) => (
               <Link
                 key={href}
