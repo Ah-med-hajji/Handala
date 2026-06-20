@@ -56,11 +56,11 @@ export default function Navbar({ locale }: NavbarProps) {
   return (
     <>
       <header
-        className={`sticky top-0 z-40 transition-shadow ${
+        className={`sticky top-0 z-40 transition-shadow relative ${
           scrolled ? 'bg-[#111]/95 backdrop-blur-sm shadow-lg' : 'bg-[#111]'
         }`}
       >
-        <div className="w-full px-6 h-20 flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-4 h-20 flex items-center gap-4">
           <Link href={`/${locale}`} className="flex items-center gap-2 shrink-0">
             <HandalaLogo size={44} />
             <span className="font-bold text-white text-base leading-tight hidden sm:block">
@@ -83,24 +83,24 @@ export default function Navbar({ locale }: NavbarProps) {
               </Link>
             ))}
           </nav>
+        </div>
 
-          <div className="flex items-center gap-2 shrink-0 ms-6">
-            <Link
-              href={otherLocalePath}
-              className="text-sm font-bold bg-accent/10 border border-accent/60 px-3 py-1.5 rounded-full text-accent hover:bg-accent hover:text-black transition-colors tracking-wide"
-            >
-              {isAr ? 'EN' : 'ع'}
-            </Link>
-            <button
-              aria-label={isAr ? 'فتح القائمة' : 'Open menu'}
-              onClick={() => setMobileOpen(true)}
-              className="xl:hidden text-text-muted hover:text-white p-1 transition-colors"
-            >
-              <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-          </div>
+        <div className="absolute end-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
+          <Link
+            href={otherLocalePath}
+            className="text-sm font-bold bg-accent/10 border border-accent/60 px-3 py-1.5 rounded-full text-accent hover:bg-accent hover:text-black transition-colors tracking-wide"
+          >
+            {isAr ? 'EN' : 'ع'}
+          </Link>
+          <button
+            aria-label={isAr ? 'فتح القائمة' : 'Open menu'}
+            onClick={() => setMobileOpen(true)}
+            className="xl:hidden text-text-muted hover:text-white p-1 transition-colors"
+          >
+            <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
         </div>
       </header>
 
