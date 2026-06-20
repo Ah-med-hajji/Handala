@@ -60,7 +60,7 @@ export default function Navbar({ locale }: NavbarProps) {
           scrolled ? 'bg-[#111]/95 backdrop-blur-sm shadow-lg' : 'bg-[#111]'
         }`}
       >
-        <div className="max-w-[1600px] mx-auto px-4 h-20 flex items-center justify-between gap-6">
+        <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between gap-4">
           <Link href={`/${locale}`} className="flex items-center gap-2 shrink-0">
             <HandalaLogo size={44} />
             <span className="font-bold text-white text-base leading-tight hidden sm:block">
@@ -68,12 +68,12 @@ export default function Navbar({ locale }: NavbarProps) {
             </span>
           </Link>
 
-          <nav className="hidden 2xl:flex items-center gap-1 flex-1 justify-start ms-6 me-8 min-w-0">
+          <nav className="hidden xl:flex items-center gap-2 flex-1 justify-start ms-4 me-2 min-w-0">
             {navLinks.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
-                className={`px-1.5 py-2 text-[15px] font-semibold rounded transition-colors whitespace-nowrap ${
+                className={`px-2 py-2 text-base font-semibold rounded transition-colors whitespace-nowrap ${
                   isActive(href)
                     ? 'text-accent border-b-2 border-accent pb-1'
                     : 'text-text-muted hover:text-white'
@@ -84,7 +84,7 @@ export default function Navbar({ locale }: NavbarProps) {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2 shrink-0 ms-4">
+          <div className="flex items-center gap-2 shrink-0 ms-3">
             <Link
               href={otherLocalePath}
               className="text-sm font-bold bg-accent/10 border border-accent/60 px-3 py-1.5 rounded-full text-accent hover:bg-accent hover:text-black transition-colors tracking-wide"
@@ -94,7 +94,7 @@ export default function Navbar({ locale }: NavbarProps) {
             <button
               aria-label={isAr ? 'فتح القائمة' : 'Open menu'}
               onClick={() => setMobileOpen(true)}
-              className="2xl:hidden text-text-muted hover:text-white p-1 transition-colors"
+              className="xl:hidden text-text-muted hover:text-white p-1 transition-colors"
             >
               <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -105,7 +105,7 @@ export default function Navbar({ locale }: NavbarProps) {
       </header>
 
       {mobileOpen && (
-        <div className="fixed inset-0 z-50 2xl:hidden">
+        <div className="fixed inset-0 z-50 xl:hidden">
           <div className="absolute inset-0 bg-black/70" onClick={() => setMobileOpen(false)} />
           <div className={`absolute inset-y-0 ${isAr ? 'right-0' : 'left-0'} w-80 bg-[#111] flex flex-col shadow-xl`}>
             <div className="flex items-center justify-between p-4 border-b border-border">
