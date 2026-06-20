@@ -84,7 +84,7 @@ export default function Navbar({ locale }: NavbarProps) {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2 shrink-0 ms-6">
+          <div className="flex items-center gap-2 shrink-0 ms-10">
             <Link
               href={otherLocalePath}
               className="text-sm font-bold bg-accent/10 border border-accent/60 px-3 py-1.5 rounded-full text-accent hover:bg-accent hover:text-black transition-colors tracking-wide"
