@@ -43,7 +43,7 @@ export default async function SupportersPage({ params: { locale } }: { params: {
                     )}
                   </div>
                   {desc && (
-                    <p className="text-text-muted text-sm mt-2 leading-relaxed">{desc}</p>
+                    <p className="text-text-muted text-sm mt-2 leading-relaxed text-justify">{desc}</p>
                   )}
                 </div>
               );

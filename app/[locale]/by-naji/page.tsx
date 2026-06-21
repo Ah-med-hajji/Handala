@@ -34,7 +34,7 @@ export default function ByNajiPage({ params: { locale } }: { params: { locale: s
                   {section.paragraphs.map((p, pIdx) => (
                     <p
                       key={pIdx}
-                      className="text-text-primary leading-loose text-lg"
+                      className="text-text-primary leading-loose text-lg text-justify"
                     >
                       {p}
                     </p>

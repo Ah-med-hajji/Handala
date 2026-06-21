@@ -9,12 +9,16 @@ interface NavbarProps {
   locale: string;
 }
 
+const LOGO_W = 776;
+const LOGO_H = 321;
+
 function HandalaLogo({ size = 44 }: { size?: number }) {
+  const width = Math.round((size * LOGO_W) / LOGO_H);
   return (
     <Image
-      src="/handala-logo.png"
+      src="/logo.png"
       alt="Handala"
-      width={size}
+      width={width}
       height={size}
       priority
       className="shrink-0 object-contain"

@@ -14,7 +14,7 @@ export default async function AboutNajiPage({ params: { locale } }: { params: { 
         <h1 className="text-3xl font-bold mb-8">{title}</h1>
         <div className="space-y-4">
           {paragraphs.map((p, i) => (
-            <p key={i} className="text-text-primary leading-relaxed text-lg">
+            <p key={i} className="text-text-primary leading-relaxed text-lg text-justify">
               {p}
             </p>
           ))}
