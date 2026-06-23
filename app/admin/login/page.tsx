@@ -17,28 +17,39 @@ export default function AdminLoginPage() {
     setLoading(true);
     setError('');
 
-    if (USE_MOCK) {
-      const res = await fetch('/api/mock-login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
-      });
-      if (res.ok) {
-        window.location.href = '/admin';
-      } else {
-        setError('Invalid credentials — use password: admin123');
-        setLoading(false);
+    try {
+      if (USE_MOCK) {
+        const res = await fetch('/api/mock-login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password }),
+        });
+        if (res.ok) {
+          window.location.href = '/admin';
+        } else {
+          setError('Invalid credentials — use password: admin123');
+          setLoading(false);
+        }
+        return;
       }
-      return;
-    }
 
-    const supabase = createClient();
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) {
-      setError('Invalid credentials');
+      if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+        setError('Auth is misconfigured: Supabase env vars missing from this build.');
+        setLoading(false);
+        return;
+      }
+
+      const supabase = createClient();
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        setError('Invalid credentials');
+        setLoading(false);
+      } else {
+        window.location.href = '/admin';
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Sign-in failed');
       setLoading(false);
-    } else {
-      window.location.href = '/admin';
     }
   }
 
