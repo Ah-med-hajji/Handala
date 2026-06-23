@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation';
 import { getCategoryBySlug, getCartoonsByCategory } from '@/lib/data';
 import CartoonGrid from '@/components/cartoons/CartoonGrid';
 import HeroCarousel from '@/components/layout/HeroCarousel';
+import { getTranslations } from 'next-intl/server';
+import { pickLocaleField } from '@/lib/i18n-utils';
 import type { SortOrder } from '@/types';
 
 export default async function CategoryPage({
@@ -31,10 +33,12 @@ export default async function CategoryPage({
     { sort: 'newest', page: 1, limit: 8 }
   );
 
+  const t = await getTranslations({ locale });
+
   const totalPages = Math.ceil(total / limit);
   const name = category
-    ? (locale === 'ar' ? category.name_ar : category.name_en)
-    : (locale === 'ar' ? 'جميع الرسومات' : 'All Cartoons');
+    ? pickLocaleField(category, 'name', locale)
+    : t('home.allCartoons');
 
   return (
     <div className="min-h-screen">
@@ -49,7 +53,7 @@ export default async function CategoryPage({
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent" />
         <div className="relative z-10 p-6 md:p-10">
           <h1 className="text-2xl md:text-4xl font-bold text-white">{name}</h1>
-          <p className="text-text-muted mt-1">{total} {locale === 'ar' ? 'رسومات' : 'cartoons'}</p>
+          <p className="text-text-muted mt-1">{total} {t('category.cartoons')}</p>
         </div>
       </div>
       {featured.length >= 2 && (
@@ -58,25 +62,25 @@ export default async function CategoryPage({
             locale={locale}
             slides={featured.map(c => ({
               src: c.image_url,
-              alt: (locale === 'ar' ? c.title_ar : (c.title_en || c.title_ar)) || '',
+              alt: pickLocaleField(c, 'title', locale),
               href: `/${locale}/cartoon/${c.id}`,
             }))}
           />
         </div>
       )}
       <div className="px-4 py-4 flex items-center gap-4 border-b border-border">
-        <span className="text-text-muted text-sm">{locale === 'ar' ? 'ترتيب:' : 'Sort:'}</span>
+        <span className="text-text-muted text-sm">{t('category.sort')}</span>
         <a
           href={`?sort=newest&page=1`}
           className={`text-sm px-3 py-1 rounded ${sort === 'newest' ? 'bg-accent text-black' : 'text-text-muted hover:text-white'}`}
         >
-          {locale === 'ar' ? 'الأحدث' : 'Newest'}
+          {t('category.sortNewest')}
         </a>
         <a
           href={`?sort=oldest&page=1`}
           className={`text-sm px-3 py-1 rounded ${sort === 'oldest' ? 'bg-accent text-black' : 'text-text-muted hover:text-white'}`}
         >
-          {locale === 'ar' ? 'الأقدم' : 'Oldest'}
+          {t('category.sortOldest')}
         </a>
       </div>
       <div className="p-4">
@@ -85,15 +89,15 @@ export default async function CategoryPage({
           <div className="flex justify-center gap-4 mt-8">
             {page > 1 && (
               <a href={`?sort=${sort}&page=${page - 1}`} className="px-4 py-2 bg-card border border-border rounded hover:border-accent text-sm">
-                {locale === 'ar' ? 'السابق' : 'Previous'}
+                {t('category.prev')}
               </a>
             )}
             <span className="px-4 py-2 text-text-muted text-sm">
-              {locale === 'ar' ? `صفحة ${page} من ${totalPages}` : `Page ${page} of ${totalPages}`}
+              {t('category.pageOf', { current: page, total: totalPages })}
             </span>
             {page < totalPages && (
               <a href={`?sort=${sort}&page=${page + 1}`} className="px-4 py-2 bg-card border border-border rounded hover:border-accent text-sm">
-                {locale === 'ar' ? 'التالي' : 'Next'}
+                {t('category.next')}
               </a>
             )}
           </div>

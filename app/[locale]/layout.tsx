@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 
-const locales = ['ar', 'en'];
+const locales = ['ar', 'en', 'fr', 'es'];
 
 export default async function LocaleLayout({
   children,

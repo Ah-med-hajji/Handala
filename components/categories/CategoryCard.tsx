@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { pickLocaleField } from '@/lib/i18n-utils';
 import type { CategoryWithCount } from '@/types';
 
 interface CategoryCardProps {
@@ -9,7 +10,7 @@ interface CategoryCardProps {
 
 export default function CategoryCard({ category, locale }: CategoryCardProps) {
   const isAr = locale === 'ar';
-  const name = isAr ? category.name_ar : category.name_en;
+  const name = pickLocaleField(category, 'name', locale);
 
   return (
     <Link

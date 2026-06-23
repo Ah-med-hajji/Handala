@@ -1,31 +1,25 @@
 import { getPublishedSupporters } from '@/lib/content';
+import { getTranslations } from 'next-intl/server';
+import { pickLocaleField } from '@/lib/i18n-utils';
 import type { Supporter } from '@/types';
 
 export default async function SupportersPage({ params: { locale } }: { params: { locale: string } }) {
   const supporters = await getPublishedSupporters();
-  const isAr = locale === 'ar';
+  const t = await getTranslations({ locale });
 
   return (
     <div className="min-h-screen px-4 py-12">
       <div className="max-w-2xl mx-auto">
-        <h1 className="text-3xl font-bold mb-4">
-          {isAr ? 'الداعمون' : 'Supporters'}
-        </h1>
-        <p className="text-text-muted mb-10">
-          {isAr
-            ? 'شكر وتقدير لكل من ساهم في إحياء هذا الإرث وحفظه.'
-            : 'Our gratitude to all who contributed to preserving this legacy.'}
-        </p>
+        <h1 className="text-3xl font-bold mb-4">{t('supporters.title')}</h1>
+        <p className="text-text-muted mb-10">{t('supporters.thanks')}</p>
 
         {supporters.length === 0 ? (
-          <p className="text-text-muted">
-            {isAr ? 'لا يوجد داعمون بعد.' : 'No supporters listed yet.'}
-          </p>
+          <p className="text-text-muted">{t('common.contentComingSoon')}</p>
         ) : (
           <div className="space-y-6">
             {supporters.map((s: Supporter) => {
-              const name = isAr ? s.name_ar : (s.name_en || s.name_ar);
-              const desc = isAr ? s.description_ar : (s.description_en || s.description_ar);
+              const name = pickLocaleField(s, 'name', locale);
+              const desc = pickLocaleField(s, 'description', locale);
               return (
                 <div key={s.id} className="bg-card border border-border rounded-lg p-5">
                   <div className="flex items-center justify-between">

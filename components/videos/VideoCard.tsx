@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import VideoModal from './VideoModal';
+import { pickLocaleField } from '@/lib/i18n-utils';
 import type { Video } from '@/types';
 
 interface VideoCardProps {
@@ -11,9 +12,8 @@ interface VideoCardProps {
 
 export default function VideoCard({ video, locale }: VideoCardProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const isAr = locale === 'ar';
-  const title = isAr ? video.title_ar : (video.title_en || video.title_ar);
-  const desc = isAr ? video.description_ar : video.description_en;
+  const title = pickLocaleField(video, 'title', locale);
+  const desc = pickLocaleField(video, 'description', locale);
 
   return (
     <>

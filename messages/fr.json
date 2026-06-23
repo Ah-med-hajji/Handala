@@ -1,0 +1,115 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "categories": "Catégories",
+    "videos": "Vidéos",
+    "sendCartoon": "Soumettre une caricature",
+    "aboutSite": "À propos du site",
+    "aboutNaji": "À propos de Naji",
+    "byNaji": "Par Naji Al-Ali",
+    "aboutAssassination": "L'assassinat",
+    "supporters": "Soutiens",
+    "language": "Langue"
+  },
+  "home": {
+    "searchPlaceholder": "Rechercher des caricatures...",
+    "allCartoons": "Toutes les caricatures",
+    "categories": "Catégories"
+  },
+  "category": {
+    "cartoons": "caricatures",
+    "sortNewest": "Plus récentes",
+    "sortOldest": "Plus anciennes",
+    "sort": "Trier :",
+    "prev": "Précédent",
+    "next": "Suivant",
+    "pageOf": "Page {current} sur {total}",
+    "noCartoons": "Aucune caricature dans cette catégorie"
+  },
+  "cartoon": {
+    "publishedOn": "Publiée le",
+    "source": "Source",
+    "categories": "Thèmes",
+    "tags": "Mots-clés",
+    "description": "Description et analyse",
+    "noDescription": "Aucune description disponible pour le moment",
+    "share": "Partager cette œuvre",
+    "copyLink": "Copier le lien",
+    "shareTwitter": "Partager sur X",
+    "shareWhatsapp": "Partager sur WhatsApp",
+    "relatedWorks": "Œuvres liées",
+    "zoom": "Agrandir",
+    "viewFullSize": "Voir en taille réelle",
+    "viewFullSizeAria": "Voir l'image en taille réelle dans un nouvel onglet",
+    "arabic": "Arabe",
+    "english": "Anglais",
+    "linkCopied": "Lien copié !"
+  },
+  "search": {
+    "title": "Résultats de recherche",
+    "results": "{count} résultats pour « {query} »",
+    "noResults": "Aucun résultat trouvé",
+    "noResultsHint": "Essayez d'autres mots-clés",
+    "categoryMatch": "Catégorie correspondante",
+    "viewCategory": "Voir la catégorie",
+    "minChars": "Saisissez au moins 2 caractères pour rechercher"
+  },
+  "videos": {
+    "title": "Vidéos",
+    "noVideos": "Aucune vidéo disponible"
+  },
+  "sendCartoon": {
+    "title": "Soumettre une caricature",
+    "description": "Vous possédez une caricature de Naji Al-Ali ? Partagez-la avec nous pour qu'elle soit ajoutée à l'archive après examen.",
+    "name": "Nom",
+    "email": "Adresse e-mail",
+    "message": "Message (facultatif)",
+    "image": "Image (facultatif)",
+    "submit": "Envoyer",
+    "success": "Merci pour votre contribution ! Nous examinerons votre soumission prochainement.",
+    "error": "Une erreur est survenue. Veuillez réessayer.",
+    "uploading": "Envoi en cours..."
+  },
+  "aboutSite": {
+    "title": "À propos du site",
+    "mission": "Notre mission",
+    "missionText": "Archiver et protéger l'héritage visuel de Naji Al-Ali, et le présenter aux nouvelles générations de façon organisée et accessible, tout en préservant son contexte politique et culturel.",
+    "why": "Pourquoi cette archive ?",
+    "whyText": "Naji Al-Ali est l'un des artistes arabes les plus marquants à avoir utilisé la caricature comme outil de résistance et d'expression. Ses dessins constituent un document historique inestimable qui doit être préservé et mis à disposition du monde."
+  },
+  "aboutNaji": {
+    "title": "À propos de Naji Al-Ali",
+    "born": "Né en 1937 au village d'Al-Shajara, en Palestine",
+    "died": "Assassiné en 1987 à Londres",
+    "bio": "Naji Al-Ali est un caricaturiste palestinien considéré comme l'un des artistes les plus importants de l'histoire arabe. Au cours de sa carrière, il a réalisé plus de quarante mille caricatures publiées dans de nombreux journaux arabes. Il est le créateur du célèbre personnage Handala, symbole de l'enfant réfugié palestinien."
+  },
+  "supporters": {
+    "title": "Soutiens",
+    "thanks": "Notre gratitude à toutes celles et ceux qui ont contribué à préserver cet héritage."
+  },
+  "byNaji": {
+    "translationComingSoon": "Traduction à venir. Veuillez consulter cette page en arabe pour le texte complet."
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "returnHome": "Retour à l'accueil",
+    "notFound": "Page introuvable",
+    "close": "Fermer",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "viewSite": "Voir le site",
+    "search": "Recherche",
+    "searchPlaceholder": "Rechercher dans les œuvres de Naji Al-Ali...",
+    "clearSearch": "Effacer la recherche",
+    "zoomImage": "Agrandir l'image",
+    "openMenu": "Ouvrir le menu",
+    "contentComingSoon": "Contenu à venir."
+  },
+  "footer": {
+    "tagline": "Archive numérique des œuvres de Naji Al-Ali",
+    "copyright": "Site créé à l'initiative de l'Association contre le sionisme et le racisme – Jordanie"
+  }
+}

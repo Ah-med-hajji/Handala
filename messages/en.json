@@ -8,7 +8,8 @@
     "aboutNaji": "About Naji",
     "byNaji": "By Naji Al-Ali",
     "aboutAssassination": "The Assassination",
-    "supporters": "Supporters"
+    "supporters": "Supporters",
+    "language": "Language"
   },
   "home": {
     "searchPlaceholder": "Search cartoons...",
@@ -38,6 +39,8 @@
     "shareWhatsapp": "Share on WhatsApp",
     "relatedWorks": "Related Works",
     "zoom": "Zoom",
+    "viewFullSize": "View full size",
+    "viewFullSizeAria": "View full size in a new tab",
     "arabic": "Arabic",
     "english": "English",
     "linkCopied": "Link copied!"
@@ -84,6 +87,9 @@
     "title": "Supporters",
     "thanks": "Our gratitude to all who contributed to preserving this legacy."
   },
+  "byNaji": {
+    "translationComingSoon": "Translation coming soon. Please view this page in Arabic for the full text."
+  },
   "common": {
     "loading": "Loading...",
     "error": "An error occurred",
@@ -94,7 +100,13 @@
     "save": "Save",
     "delete": "Delete",
     "edit": "Edit",
-    "viewSite": "View Site"
+    "viewSite": "View Site",
+    "search": "Search",
+    "searchPlaceholder": "Search Naji Al-Ali works...",
+    "clearSearch": "Clear search",
+    "zoomImage": "Zoom image",
+    "openMenu": "Open menu",
+    "contentComingSoon": "Content coming soon."
   },
   "footer": {
     "tagline": "Digital Archive of Naji Al-Ali's Works",

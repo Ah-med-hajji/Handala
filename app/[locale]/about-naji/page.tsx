@@ -1,11 +1,13 @@
 import { getSiteContent } from '@/lib/content';
+import { getTranslations } from 'next-intl/server';
+import { pickLocaleField } from '@/lib/i18n-utils';
 
 export default async function AboutNajiPage({ params: { locale } }: { params: { locale: string } }) {
   const content = await getSiteContent('about_naji');
-  const isAr = locale === 'ar';
+  const t = await getTranslations({ locale });
 
-  const title = isAr ? (content?.title_ar || 'عن ناجي العلي') : (content?.title_en || 'About Naji Al-Ali');
-  const body = isAr ? (content?.content_ar || '') : (content?.content_en || content?.content_ar || '');
+  const title = pickLocaleField(content, 'title', locale) || t('aboutNaji.title');
+  const body = pickLocaleField(content, 'content', locale);
   const paragraphs = body.split('\n\n').filter(Boolean);
 
   return (
@@ -19,7 +21,7 @@ export default async function AboutNajiPage({ params: { locale } }: { params: { 
             </p>
           ))}
           {paragraphs.length === 0 && (
-            <p className="text-text-muted">Content coming soon.</p>
+            <p className="text-text-muted">{t('common.contentComingSoon')}</p>
           )}
         </div>
       </div>

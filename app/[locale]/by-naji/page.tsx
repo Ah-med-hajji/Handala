@@ -5,10 +5,15 @@ import {
   BY_NAJI_TITLE_AR,
   BY_NAJI_TITLE_EN,
 } from '@/lib/static-content/by-naji';
+import { getTranslations } from 'next-intl/server';
 
-export default function ByNajiPage({ params: { locale } }: { params: { locale: string } }) {
+export default async function ByNajiPage({ params: { locale } }: { params: { locale: string } }) {
   const isAr = locale === 'ar';
+  // Article body is authored only in Arabic. ar renders the full text; every
+  // other locale (en/fr/es) shows the English title and a localized
+  // "translation coming soon" notice until human translations are produced.
   const title = isAr ? BY_NAJI_TITLE_AR : BY_NAJI_TITLE_EN;
+  const t = await getTranslations({ locale });
 
   return (
     <div className="min-h-screen px-4 py-12">
@@ -48,8 +53,7 @@ export default function ByNajiPage({ params: { locale } }: { params: { locale: s
           </div>
         ) : (
           <p className="text-text-muted text-lg leading-relaxed">
-            English translation coming soon. Please view this page in Arabic for
-            the full text.
+            {t('byNaji.translationComingSoon')}
           </p>
         )}
       </article>

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { pickLocaleField } from '@/lib/i18n-utils';
 import type { Cartoon } from '@/types';
 
 const BLUR_PLACEHOLDER =
@@ -11,8 +12,7 @@ interface CartoonCardProps {
 }
 
 export default function CartoonCard({ cartoon, locale }: CartoonCardProps) {
-  const isAr = locale === 'ar';
-  const title = isAr ? cartoon.title_ar : (cartoon.title_en || cartoon.title_ar);
+  const title = pickLocaleField(cartoon, 'title', locale);
 
   return (
     <Link
@@ -22,7 +22,7 @@ export default function CartoonCard({ cartoon, locale }: CartoonCardProps) {
       <div className="aspect-[4/3] relative">
         <Image
           src={cartoon.image_url}
-          alt={cartoon.title_ar}
+          alt={title}
           fill
           className="object-cover"
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"

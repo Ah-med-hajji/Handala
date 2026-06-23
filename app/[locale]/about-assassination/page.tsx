@@ -1,4 +1,6 @@
 import { getSiteContent } from '@/lib/content';
+import { getTranslations } from 'next-intl/server';
+import { pickLocaleField } from '@/lib/i18n-utils';
 
 const DEFAULT_AR = `في الثاني والعشرين من يوليو/تموز 1987، تعرّض ناجي العلي لمحاولة اغتيال في لندن قرب مكتب جريدة "القبس" التي كان يعمل فيها، حيث أُطلقت رصاصة على رأسه. ظلّ في غيبوبة خمسة أسابيع، ثم رحل في التاسع والعشرين من أغسطس/آب من العام نفسه.
 
@@ -18,15 +20,14 @@ export default async function AboutAssassinationPage({
   params: { locale: string };
 }) {
   const content = await getSiteContent('about_assassination');
-  const isAr = locale === 'ar';
+  const t = await getTranslations({ locale });
 
-  const title = isAr
-    ? content?.title_ar || 'عن الاغتيال'
-    : content?.title_en || 'The Assassination';
+  const title =
+    pickLocaleField(content, 'title', locale) || t('nav.aboutAssassination');
 
-  const body = isAr
-    ? content?.content_ar || DEFAULT_AR
-    : content?.content_en || content?.content_ar || DEFAULT_EN;
+  const body =
+    pickLocaleField(content, 'content', locale) ||
+    (locale === 'ar' ? DEFAULT_AR : DEFAULT_EN);
 
   const paragraphs = body.split('\n\n').filter(Boolean);
 

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import CategoryCard from './CategoryCard';
+import { getTranslations } from 'next-intl/server';
 import type { CategoryWithCount } from '@/types';
 
 interface CategoryGridProps {
@@ -7,8 +8,9 @@ interface CategoryGridProps {
   locale: string;
 }
 
-export default function CategoryGrid({ categories, locale }: CategoryGridProps) {
+export default async function CategoryGrid({ categories, locale }: CategoryGridProps) {
   const isAr = locale === 'ar';
+  const t = await getTranslations({ locale });
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4 pb-4">
@@ -27,9 +29,7 @@ export default function CategoryGrid({ categories, locale }: CategoryGridProps) 
           </svg>
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
           <div className={`absolute bottom-0 ${isAr ? 'right-0' : 'left-0'} p-3`}>
-            <p className="text-white font-semibold text-sm">
-              {isAr ? 'جميع الرسومات' : 'All Cartoons'}
-            </p>
+            <p className="text-white font-semibold text-sm">{t('home.allCartoons')}</p>
           </div>
         </div>
       </Link>

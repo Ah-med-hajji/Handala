@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 interface SearchInputProps {
   locale: string;
@@ -10,6 +11,7 @@ interface SearchInputProps {
 }
 
 export default function SearchInput({ locale, className = '', initialValue = '' }: SearchInputProps) {
+  const t = useTranslations('common');
   const [value, setValue] = useState(initialValue);
   const router = useRouter();
   const pathname = usePathname();
@@ -62,13 +64,13 @@ export default function SearchInput({ locale, className = '', initialValue = '' 
         value={value}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
-        placeholder={locale === 'ar' ? 'ابحث في أعمال ناجي العلي...' : 'Search Naji Al-Ali works...'}
+        placeholder={t('searchPlaceholder')}
         className="w-full bg-card border border-border rounded-full ps-10 pe-10 py-3 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent text-sm transition-colors"
       />
       {value && (
         <button
           onClick={handleClear}
-          aria-label={locale === 'ar' ? 'مسح البحث' : 'Clear search'}
+          aria-label={t('clearSearch')}
           className="absolute inset-y-0 end-3 flex items-center text-text-muted hover:text-white transition-colors"
         >
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

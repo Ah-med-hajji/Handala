@@ -8,7 +8,8 @@
     "aboutNaji": "عن ناجي العلي",
     "byNaji": "بقلم ناجي العلي",
     "aboutAssassination": "عن الاغتيال",
-    "supporters": "الداعمون"
+    "supporters": "الداعمون",
+    "language": "اللغة"
   },
   "home": {
     "searchPlaceholder": "ابحث في الرسومات...",
@@ -28,7 +29,7 @@
   "cartoon": {
     "publishedOn": "نُشر في",
     "source": "المصدر",
-    "categories": "التصنيفات",
+    "categories": "الموضوعات",
     "tags": "الكلمات المفتاحية",
     "description": "الوصف والتحليل",
     "noDescription": "لا يوجد وصف متاح حاليًا",
@@ -38,6 +39,8 @@
     "shareWhatsapp": "مشاركة عبر واتساب",
     "relatedWorks": "أعمال ذات صلة",
     "zoom": "تكبير",
+    "viewFullSize": "عرض بالحجم الكامل",
+    "viewFullSizeAria": "عرض الصورة بالحجم الكامل في علامة تبويب جديدة",
     "arabic": "العربية",
     "english": "الإنجليزية",
     "linkCopied": "تم نسخ الرابط!"
@@ -84,6 +87,9 @@
     "title": "الداعمون",
     "thanks": "شكر وتقدير لكل من ساهم في إحياء هذا الإرث."
   },
+  "byNaji": {
+    "translationComingSoon": "الترجمة قريبًا. يرجى عرض هذه الصفحة بالعربية للنص الكامل."
+  },
   "common": {
     "loading": "جارٍ التحميل...",
     "error": "حدث خطأ",
@@ -94,7 +100,13 @@
     "save": "حفظ",
     "delete": "حذف",
     "edit": "تعديل",
-    "viewSite": "عرض الموقع"
+    "viewSite": "عرض الموقع",
+    "search": "البحث",
+    "searchPlaceholder": "ابحث في أعمال ناجي العلي...",
+    "clearSearch": "مسح البحث",
+    "zoomImage": "تكبير الصورة",
+    "openMenu": "فتح القائمة",
+    "contentComingSoon": "المحتوى قريبًا."
   },
   "footer": {
     "tagline": "أرشيف رقمي لأعمال ناجي العلي",

@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 
 const intlMiddleware = createMiddleware({
-  locales: ['ar', 'en'],
+  locales: ['ar', 'en', 'fr', 'es'],
   defaultLocale: 'ar',
   localePrefix: 'always',
 });

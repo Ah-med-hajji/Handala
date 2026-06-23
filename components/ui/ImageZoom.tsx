@@ -2,15 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 interface ImageZoomProps {
   src: string;
   alt: string;
-  locale?: string;
 }
 
-export default function ImageZoom({ src, alt, locale = 'ar' }: ImageZoomProps) {
+export default function ImageZoom({ src, alt }: ImageZoomProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const t = useTranslations();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -34,10 +35,10 @@ export default function ImageZoom({ src, alt, locale = 'ar' }: ImageZoomProps) {
         />
         <button
           onClick={() => setIsOpen(true)}
-          aria-label={locale === 'ar' ? 'تكبير الصورة' : 'Zoom image'}
+          aria-label={t('common.zoomImage')}
           className="absolute bottom-2 end-2 bg-black/70 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
         >
-          🔍 {locale === 'ar' ? 'تكبير' : 'Zoom'}
+          🔍 {t('cartoon.zoom')}
         </button>
       </div>
 
@@ -47,7 +48,7 @@ export default function ImageZoom({ src, alt, locale = 'ar' }: ImageZoomProps) {
           onClick={() => setIsOpen(false)}
         >
           <button
-            aria-label={locale === 'ar' ? 'إغلاق' : 'Close'}
+            aria-label={t('common.close')}
             className="absolute top-4 end-4 text-white text-2xl bg-black/50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-black/80 transition-colors"
           >
             ×
