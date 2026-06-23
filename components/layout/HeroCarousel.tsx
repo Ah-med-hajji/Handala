@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 interface Slide {
   src: string;
   alt: string;
+  href?: string;
 }
 
 interface HeroCarouselProps {
@@ -56,21 +57,39 @@ export default function HeroCarousel({ slides, locale = 'ar' }: HeroCarouselProp
       <div className="relative w-full overflow-hidden rounded-xl h-[360px] lg:h-[440px] bg-[#0d0d0d]">
 
         {/* Stacked slides — crossfade via opacity */}
-        {slides.map((slide, i) => (
-          <div
-            key={i}
-            className={`absolute inset-0 transition-opacity duration-[800ms] ease-in-out ${
-              i === current ? 'opacity-100 z-10' : 'opacity-0 z-0'
-            }`}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={slide.src}
-              alt={slide.alt}
-              className={`w-full h-full object-contain block${i === current ? ' animate-ken-burns' : ''}`}
-            />
-          </div>
-        ))}
+        {slides.map((slide, i) => {
+          const inner = (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={slide.src}
+                alt={slide.alt}
+                className={`w-full h-full object-contain block${i === current ? ' animate-ken-burns' : ''}`}
+              />
+            </>
+          );
+          return (
+            <div
+              key={i}
+              className={`absolute inset-0 transition-opacity duration-[800ms] ease-in-out ${
+                i === current ? 'opacity-100 z-10' : 'opacity-0 z-0'
+              }`}
+            >
+              {slide.href ? (
+                <a
+                  href={slide.href}
+                  className="block w-full h-full"
+                  tabIndex={i === current ? 0 : -1}
+                  aria-hidden={i !== current}
+                >
+                  {inner}
+                </a>
+              ) : (
+                inner
+              )}
+            </div>
+          );
+        })}
 
         {/* Bottom gradient — fades carousel into page background */}
         <div

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { getCategoryBySlug, getCartoonsByCategory } from '@/lib/data';
 import CartoonGrid from '@/components/cartoons/CartoonGrid';
+import HeroCarousel from '@/components/layout/HeroCarousel';
 import type { SortOrder } from '@/types';
 
 export default async function CategoryPage({
@@ -25,6 +26,11 @@ export default async function CategoryPage({
     { sort, page, limit }
   );
 
+  const { cartoons: featured } = await getCartoonsByCategory(
+    category?.id || 'all',
+    { sort: 'newest', page: 1, limit: 8 }
+  );
+
   const totalPages = Math.ceil(total / limit);
   const name = category
     ? (locale === 'ar' ? category.name_ar : category.name_en)
@@ -46,6 +52,18 @@ export default async function CategoryPage({
           <p className="text-text-muted mt-1">{total} {locale === 'ar' ? 'رسومات' : 'cartoons'}</p>
         </div>
       </div>
+      {featured.length >= 2 && (
+        <div className="pt-6">
+          <HeroCarousel
+            locale={locale}
+            slides={featured.map(c => ({
+              src: c.image_url,
+              alt: (locale === 'ar' ? c.title_ar : (c.title_en || c.title_ar)) || '',
+              href: `/${locale}/cartoon/${c.id}`,
+            }))}
+          />
+        </div>
+      )}
       <div className="px-4 py-4 flex items-center gap-4 border-b border-border">
         <span className="text-text-muted text-sm">{locale === 'ar' ? 'ترتيب:' : 'Sort:'}</span>
         <a

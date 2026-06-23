@@ -40,9 +40,22 @@ export default async function CartoonPage({
           <span className="mx-2">{locale === 'ar' ? '←' : '→'}</span>
           <span>{locale === 'ar' ? cartoon.title_ar : (cartoon.title_en || cartoon.title_ar)}</span>
         </div>
-        <div className="bg-card rounded-lg overflow-hidden mb-6">
+        <div className="relative bg-card rounded-lg overflow-hidden mb-6 group">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={cartoon.image_url} alt={cartoon.title_ar} className="w-full" />
+          <a
+            href={cartoon.image_high_res_url || cartoon.image_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={locale === 'ar' ? 'عرض الصورة بالحجم الكامل في علامة تبويب جديدة' : 'View full size in a new tab'}
+            title={locale === 'ar' ? 'عرض بالحجم الكامل' : 'View full size'}
+            className="absolute top-3 end-3 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-black/60 border border-white/20 text-white backdrop-blur-sm opacity-80 md:opacity-0 md:group-hover:opacity-100 hover:bg-black/80 hover:border-accent hover:text-accent transition-all duration-200"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </a>
         </div>
         <div className="bg-card rounded-lg p-6">
           <h1 className="text-2xl font-bold mb-4">
