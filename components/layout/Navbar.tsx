@@ -180,7 +180,7 @@ export default function Navbar({ locale }: NavbarProps) {
           scrolled ? 'bg-[#111]/95 backdrop-blur-sm shadow-lg' : 'bg-[#111]'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-center gap-6">
+        <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-center gap-6 xl:pe-36">
           <Link href={`/${locale}`} className="flex items-center gap-2 shrink-0">
             <HandalaLogo size={44} />
             <span className="font-bold text-white text-base leading-tight hidden sm:block">
