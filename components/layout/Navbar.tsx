@@ -7,8 +7,14 @@ import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { LOCALES, LOCALE_LABELS, type Locale } from '@/lib/i18n-utils';
 
+interface ExtraContentLink {
+  key: string;
+  label: string;
+}
+
 interface NavbarProps {
   locale: string;
+  extraContentLinks?: ExtraContentLink[];
 }
 
 const LOGO_W = 776;
@@ -29,8 +35,6 @@ function HandalaLogo({ size = 44 }: { size?: number }) {
   );
 }
 
-// Builds the equivalent path for a different locale, e.g.
-//   /ar/categories/all  →  /fr/categories/all
 function buildPathForLocale(pathname: string, currentLocale: string, nextLocale: string) {
   const prefix = `/${currentLocale}`;
   if (pathname === prefix) return `/${nextLocale}`;
@@ -38,7 +42,6 @@ function buildPathForLocale(pathname: string, currentLocale: string, nextLocale:
   return `/${nextLocale}`;
 }
 
-// Two-letter chip label for the dropdown trigger. ع stands in for ar.
 const LOCALE_CHIP: Record<Locale, string> = {
   ar: 'ع',
   en: 'EN',
@@ -94,16 +97,7 @@ function LanguageDropdown({ locale, pathname, variant, onNavigate }: LanguageDro
         }
       >
         <span>{triggerLabel}</span>
-        <svg
-          className={`h-3 w-3 transition-transform ${open ? 'rotate-180' : ''}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2.5}
-          aria-hidden
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
+        <Chevron open={open} />
       </button>
       {open && (
         <ul
@@ -144,10 +138,120 @@ function LanguageDropdown({ locale, pathname, variant, onNavigate }: LanguageDro
   );
 }
 
-export default function Navbar({ locale }: NavbarProps) {
+interface NavLink {
+  href: string;
+  label: string;
+}
+
+interface ContentDropdownProps {
+  label: string;
+  links: NavLink[];
+  isActiveHref: (href: string) => boolean;
+}
+
+function ContentDropdown({ label, links, isActiveHref }: ContentDropdownProps) {
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef<HTMLDivElement | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onClickOutside = (e: MouseEvent) => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) setOpen(false);
+    };
+    const onEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('mousedown', onClickOutside);
+    document.addEventListener('keydown', onEsc);
+    return () => {
+      document.removeEventListener('mousedown', onClickOutside);
+      document.removeEventListener('keydown', onEsc);
+    };
+  }, [open]);
+
+  const cancelClose = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  };
+  const scheduleClose = () => {
+    cancelClose();
+    closeTimer.current = setTimeout(() => setOpen(false), 120);
+  };
+
+  const someActive = links.some(l => isActiveHref(l.href));
+
+  return (
+    <div
+      ref={wrapRef}
+      className="relative"
+      onMouseEnter={() => { cancelClose(); setOpen(true); }}
+      onMouseLeave={scheduleClose}
+    >
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        className={`px-2 py-2 text-base font-semibold rounded transition-colors whitespace-nowrap flex items-center gap-1 ${
+          someActive ? 'text-accent' : 'text-text-muted hover:text-white'
+        }`}
+      >
+        <span>{label}</span>
+        <Chevron open={open} />
+      </button>
+      {open && (
+        <ul
+          role="menu"
+          className="absolute start-0 top-full mt-2 min-w-[14rem] bg-[#1a1a1a] border border-border rounded-lg shadow-xl py-1 z-50"
+        >
+          {links.map(({ href, label }) => {
+            const active = isActiveHref(href);
+            return (
+              <li key={href} role="none">
+                <Link
+                  href={href}
+                  role="menuitem"
+                  onClick={() => setOpen(false)}
+                  className={`block px-4 py-2 text-sm transition-colors ${
+                    active
+                      ? 'text-accent bg-accent/10'
+                      : 'text-text-muted hover:text-white hover:bg-card-hover'
+                  }`}
+                >
+                  {label}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function Chevron({ open }: { open: boolean }) {
+  return (
+    <svg
+      className={`h-3 w-3 transition-transform ${open ? 'rotate-180' : ''}`}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2.5}
+      aria-hidden
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+    </svg>
+  );
+}
+
+export default function Navbar({ locale, extraContentLinks = [] }: NavbarProps) {
   const t = useTranslations();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileContentOpen, setMobileContentOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -158,15 +262,22 @@ export default function Navbar({ locale }: NavbarProps) {
 
   const isAr = locale === 'ar';
 
-  const navLinks = [
+  const contentLinks: NavLink[] = [
+    { href: `/${locale}/about-site`, label: t('nav.aboutSite') },
+    { href: `/${locale}/about-naji`, label: t('nav.aboutNaji') },
+    { href: `/${locale}/about-assassination`, label: t('nav.aboutAssassination') },
+    ...extraContentLinks.map(p => ({
+      href: `/${locale}/content/${p.key}`,
+      label: p.label,
+    })),
+  ];
+
+  const navLinks: NavLink[] = [
     { href: `/${locale}`, label: t('nav.home') },
     { href: `/${locale}/categories/all`, label: t('nav.categories') },
     { href: `/${locale}/videos`, label: t('nav.videos') },
     { href: `/${locale}/send-cartoon`, label: t('nav.sendCartoon') },
-    { href: `/${locale}/about-site`, label: t('nav.aboutSite') },
-    { href: `/${locale}/about-naji`, label: t('nav.aboutNaji') },
     { href: `/${locale}/by-naji`, label: t('nav.byNaji') },
-    { href: `/${locale}/about-assassination`, label: t('nav.aboutAssassination') },
     { href: `/${locale}/supporters`, label: t('nav.supporters') },
   ];
 
@@ -202,6 +313,11 @@ export default function Navbar({ locale }: NavbarProps) {
                 {label}
               </Link>
             ))}
+            <ContentDropdown
+              label={t('nav.content')}
+              links={contentLinks}
+              isActiveHref={isActive}
+            />
           </nav>
         </div>
 
@@ -255,6 +371,35 @@ export default function Navbar({ locale }: NavbarProps) {
                   {label}
                 </Link>
               ))}
+              <div className="border-t border-border mt-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setMobileContentOpen(o => !o)}
+                  className="w-full flex items-center justify-between px-6 py-3 text-lg font-semibold text-text-muted hover:text-white"
+                  aria-expanded={mobileContentOpen}
+                >
+                  <span>{t('nav.content')}</span>
+                  <Chevron open={mobileContentOpen} />
+                </button>
+                {mobileContentOpen && (
+                  <div className="ps-4">
+                    {contentLinks.map(({ href, label }) => (
+                      <Link
+                        key={href}
+                        href={href}
+                        onClick={() => setMobileOpen(false)}
+                        className={`block px-6 py-2 text-base transition-colors ${
+                          isActive(href)
+                            ? 'text-accent'
+                            : 'text-text-muted hover:text-white'
+                        }`}
+                      >
+                        {label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             </nav>
             <div className="p-4 border-t border-border">
               <LanguageDropdown

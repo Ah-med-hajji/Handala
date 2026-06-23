@@ -7,46 +7,70 @@ interface ImageUploadProps {
   onUpload: (url: string) => void;
   label?: string;
   bucket: string;
+  maxMb?: number;
 }
 
-export function ImageUpload({ currentUrl, onUpload, label = 'Image', bucket }: ImageUploadProps) {
+const DEFAULT_MAX_MB = 15;
+
+export function ImageUpload({
+  currentUrl,
+  onUpload,
+  label = 'Image',
+  bucket,
+  maxMb = DEFAULT_MAX_MB,
+}: ImageUploadProps) {
   const [preview, setPreview] = useState<string | null>(currentUrl || null);
   const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleFile = async (file: File) => {
-    // Vercel serverless functions reject bodies over ~4.5 MB before the route
-    // even runs, returning a plain-text "Request Entity Too Large" page that
-    // fails to parse as JSON on the client. Cap at 4 MB to stay safely below.
-    if (file.size > 4 * 1024 * 1024) {
-      setError('File too large (max 4MB). Compress the image and try again.');
+    if (file.size > maxMb * 1024 * 1024) {
+      setError(`File too large (max ${maxMb}MB).`);
       return;
     }
     setError(null);
     setUploading(true);
+    setProgress(0);
     setPreview(URL.createObjectURL(file));
 
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('bucket', bucket);
-      const res = await fetch('/api/upload', { method: 'POST', body: formData });
-      const text = await res.text();
-      let data: { url?: string; error?: string } = {};
+      const urlRes = await fetch('/api/upload-signed-url', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fileName: file.name, bucket }),
+      });
+      const urlText = await urlRes.text();
+      let urlData: {
+        signedUrl?: string;
+        publicUrl?: string;
+        error?: string;
+        mock?: boolean;
+      } = {};
       try {
-        data = JSON.parse(text);
+        urlData = JSON.parse(urlText);
       } catch {
-        throw new Error(
-          res.status === 413
-            ? 'File too large for the server. Use a smaller file.'
-            : `Upload failed (${res.status}): ${text.slice(0, 120)}`
-        );
+        throw new Error(`Could not get upload URL (${urlRes.status})`);
       }
-      if (data.url) onUpload(data.url);
-      else throw new Error(data.error || `Upload failed (${res.status})`);
+      if (!urlRes.ok || urlData.error) {
+        throw new Error(urlData.error || `Upload URL failed (${urlRes.status})`);
+      }
+
+      if (urlData.mock && urlData.publicUrl) {
+        setProgress(100);
+        onUpload(urlData.publicUrl);
+        return;
+      }
+
+      if (!urlData.signedUrl || !urlData.publicUrl) {
+        throw new Error('Upload URL response missing fields.');
+      }
+
+      await uploadWithProgress(urlData.signedUrl, file, setProgress);
+      onUpload(urlData.publicUrl);
     } catch (e: any) {
-      setError(e.message);
+      setError(e?.message || 'Upload failed');
     } finally {
       setUploading(false);
     }
@@ -67,7 +91,12 @@ export function ImageUpload({ currentUrl, onUpload, label = 'Image', bucket }: I
             <img src={preview} alt="Preview" className="max-h-48 mx-auto rounded object-contain" />
             {uploading && (
               <div className="absolute inset-0 bg-black/60 flex items-center justify-center rounded">
-                <span className="text-white text-sm">Uploading...</span>
+                <div className="text-white text-sm space-y-2 w-3/4">
+                  <p className="text-center">Uploading… {progress}%</p>
+                  <div className="w-full bg-border h-1.5 rounded overflow-hidden">
+                    <div className="h-full bg-accent transition-all" style={{ width: `${progress}%` }} />
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -77,7 +106,7 @@ export function ImageUpload({ currentUrl, onUpload, label = 'Image', bucket }: I
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
             <p className="text-text-muted text-sm">Drop image here or click to upload</p>
-            <p className="text-text-muted text-xs mt-1">JPG, PNG, WEBP — max 4MB</p>
+            <p className="text-text-muted text-xs mt-1">JPG, PNG, WEBP — max {maxMb}MB</p>
           </div>
         )}
       </div>
@@ -91,4 +120,25 @@ export function ImageUpload({ currentUrl, onUpload, label = 'Image', bucket }: I
       />
     </div>
   );
+}
+
+function uploadWithProgress(
+  url: string,
+  file: File,
+  onProgress: (pct: number) => void
+): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('PUT', url);
+    xhr.setRequestHeader('Content-Type', file.type || 'application/octet-stream');
+    xhr.upload.onprogress = e => {
+      if (e.lengthComputable) onProgress(Math.round((e.loaded / e.total) * 100));
+    };
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) resolve();
+      else reject(new Error(`Upload failed: ${xhr.status} ${xhr.responseText.slice(0, 200)}`));
+    };
+    xhr.onerror = () => reject(new Error('Network error during upload'));
+    xhr.send(file);
+  });
 }
