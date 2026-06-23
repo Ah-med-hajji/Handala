@@ -278,14 +278,14 @@ export default function ContentClient({ contents }: { contents: SiteContent[] })
   }
 
   return (
-    <div className="max-w-2xl">
-      <div className="flex items-center justify-between mb-5">
-        <p className="text-text-muted text-sm">
+    <div>
+      <div className="flex items-center justify-between gap-4 mb-5">
+        <p className="text-text-muted text-sm max-w-2xl">
           Page content shown on the public site. Custom pages also appear in the navbar &ldquo;Content&rdquo; dropdown.
         </p>
         <button
           onClick={openCreate}
-          className="bg-accent text-black px-4 py-2 rounded text-sm font-semibold hover:bg-accent/90 whitespace-nowrap"
+          className="bg-accent text-black px-4 py-2 rounded text-sm font-semibold hover:bg-accent/90 whitespace-nowrap shrink-0"
         >
           + Add Page
         </button>
