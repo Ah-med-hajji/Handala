@@ -106,13 +106,31 @@ export async function searchCartoons(query: string): Promise<SearchResult> {
       .from('cartoons')
       .select('*')
       .eq('is_published', true)
-      .or(`title_ar.ilike.%${query}%,title_en.ilike.%${query}%,description_ar.ilike.%${query}%`)
+      .or(
+        [
+          `title_ar.ilike.%${query}%`,
+          `title_en.ilike.%${query}%`,
+          `title_fr.ilike.%${query}%`,
+          `title_es.ilike.%${query}%`,
+          `description_ar.ilike.%${query}%`,
+          `description_en.ilike.%${query}%`,
+          `description_fr.ilike.%${query}%`,
+          `description_es.ilike.%${query}%`,
+        ].join(',')
+      )
       .limit(24),
     supabase
       .from('categories')
       .select('*')
       .eq('is_published', true)
-      .or(`name_ar.ilike.%${query}%,name_en.ilike.%${query}%`)
+      .or(
+        [
+          `name_ar.ilike.%${query}%`,
+          `name_en.ilike.%${query}%`,
+          `name_fr.ilike.%${query}%`,
+          `name_es.ilike.%${query}%`,
+        ].join(',')
+      )
       .limit(5),
   ]);
   return {

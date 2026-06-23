@@ -8,12 +8,22 @@ import type { SiteContent } from '@/types';
 const CONTENT_LABELS: Record<string, string> = {
   about_naji: 'About Naji Al-Ali',
   about_site: 'About the Site',
+  about_assassination: 'About the Assassination',
 };
 
 export default function ContentClient({ contents }: { contents: SiteContent[] }) {
   const router = useRouter();
   const [editing, setEditing] = useState<SiteContent | null>(null);
-  const [form, setForm] = useState({ title_ar: '', title_en: '', content_ar: '', content_en: '' });
+  const [form, setForm] = useState({
+    title_ar: '',
+    title_en: '',
+    title_fr: '',
+    title_es: '',
+    content_ar: '',
+    content_en: '',
+    content_fr: '',
+    content_es: '',
+  });
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -22,8 +32,12 @@ export default function ContentClient({ contents }: { contents: SiteContent[] })
     setForm({
       title_ar: c.title_ar,
       title_en: c.title_en || '',
+      title_fr: c.title_fr || '',
+      title_es: c.title_es || '',
       content_ar: c.content_ar,
       content_en: c.content_en || '',
+      content_fr: c.content_fr || '',
+      content_es: c.content_es || '',
     });
     setMessage('');
   };
@@ -56,7 +70,7 @@ export default function ContentClient({ contents }: { contents: SiteContent[] })
         </div>
 
         <form onSubmit={save} className="space-y-5">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm text-text-muted mb-1">Arabic Title</label>
               <input
@@ -72,6 +86,22 @@ export default function ContentClient({ contents }: { contents: SiteContent[] })
               <input
                 value={form.title_en}
                 onChange={e => setForm(f => ({ ...f, title_en: e.target.value }))}
+                className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-text-muted mb-1">French Title</label>
+              <input
+                value={form.title_fr}
+                onChange={e => setForm(f => ({ ...f, title_fr: e.target.value }))}
+                className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-text-muted mb-1">Spanish Title</label>
+              <input
+                value={form.title_es}
+                onChange={e => setForm(f => ({ ...f, title_es: e.target.value }))}
                 className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
               />
             </div>
@@ -96,6 +126,28 @@ export default function ContentClient({ contents }: { contents: SiteContent[] })
             <textarea
               value={form.content_en}
               onChange={e => setForm(f => ({ ...f, content_en: e.target.value }))}
+              rows={12}
+              className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-y"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm text-text-muted mb-1">French Content</label>
+            <p className="text-xs text-text-muted mb-2">Separate paragraphs with a blank line.</p>
+            <textarea
+              value={form.content_fr}
+              onChange={e => setForm(f => ({ ...f, content_fr: e.target.value }))}
+              rows={12}
+              className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-y"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm text-text-muted mb-1">Spanish Content</label>
+            <p className="text-xs text-text-muted mb-2">Separate paragraphs with a blank line.</p>
+            <textarea
+              value={form.content_es}
+              onChange={e => setForm(f => ({ ...f, content_es: e.target.value }))}
               rows={12}
               className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-y"
             />

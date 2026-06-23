@@ -2,67 +2,64 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createVideo } from '@/lib/actions/video-actions';
+import {
+  createAssassinationPdf,
+  updateAssassinationPdf,
+} from '@/lib/actions/assassination-pdf-actions';
+import { ImageUpload } from '@/components/admin/ImageUpload';
+import { PdfUpload } from '@/components/admin/PdfUpload';
+import type { AssassinationPdf } from '@/types';
 
-export default function NewVideoPage() {
+interface AssassinationPdfFormProps {
+  pdf?: AssassinationPdf;
+}
+
+export default function AssassinationPdfFormClient({ pdf }: AssassinationPdfFormProps) {
   const router = useRouter();
+  const isEdit = !!pdf;
+
   const [form, setForm] = useState({
-    title_ar: '',
-    title_en: '',
-    title_fr: '',
-    title_es: '',
-    description_ar: '',
-    description_en: '',
-    description_fr: '',
-    description_es: '',
-    youtube_url: '',
-    display_order: 0,
-    is_published: true,
+    title_ar: pdf?.title_ar || '',
+    title_en: pdf?.title_en || '',
+    title_fr: pdf?.title_fr || '',
+    title_es: pdf?.title_es || '',
+    description_ar: pdf?.description_ar || '',
+    description_en: pdf?.description_en || '',
+    description_fr: pdf?.description_fr || '',
+    description_es: pdf?.description_es || '',
+    pdf_url: pdf?.pdf_url || '',
+    thumbnail_url: pdf?.thumbnail_url || '',
+    display_order: pdf?.display_order ?? 0,
+    is_published: pdf?.is_published ?? true,
   });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.pdf_url) {
+      setError('PDF file is required');
+      return;
+    }
     setSaving(true);
     setError('');
-    const result = await createVideo(form);
+
+    const result = isEdit
+      ? await updateAssassinationPdf(pdf!.id, form)
+      : await createAssassinationPdf(form);
+
     if (result.success) {
-      router.push('/admin/videos');
+      router.push('/admin/assassination-pdfs');
     } else {
-      setError(result.error || 'Failed to create video');
+      setError(result.error || 'Failed to save');
       setSaving(false);
     }
   };
 
-  const previewId = form.youtube_url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([^?&]+)/)?.[1];
-
   return (
-    <div className="p-8 max-w-2xl">
-      <h1 className="text-2xl font-bold mb-6">New Video</h1>
-
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm text-text-muted mb-1">YouTube URL *</label>
-          <input
-            value={form.youtube_url}
-            onChange={e => setForm(f => ({ ...f, youtube_url: e.target.value }))}
-            className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
-            placeholder="https://www.youtube.com/watch?v=..."
-            required
-          />
-          {previewId && (
-            <div className="mt-2 aspect-video max-w-xs">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`https://img.youtube.com/vi/${previewId}/maxresdefault.jpg`}
-                alt="Preview"
-                className="w-full rounded"
-              />
-            </div>
-          )}
-        </div>
-
+    <div className="p-8 max-w-3xl">
+      <h1 className="text-2xl font-bold mb-6">{isEdit ? 'Edit PDF' : 'New PDF'}</h1>
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm text-text-muted mb-1">Arabic Title *</label>
@@ -140,14 +137,30 @@ export default function NewVideoPage() {
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          <div className="flex-1">
+        <PdfUpload
+          bucket="assassination-pdfs"
+          label="PDF File *"
+          currentUrl={form.pdf_url}
+          onUpload={url => setForm(f => ({ ...f, pdf_url: url }))}
+        />
+
+        <ImageUpload
+          bucket="assassination-thumbnails"
+          label="Thumbnail (cover image shown in the catalogue)"
+          currentUrl={form.thumbnail_url}
+          onUpload={url => setForm(f => ({ ...f, thumbnail_url: url }))}
+        />
+
+        <div className="flex items-center gap-4">
+          <div>
             <label className="block text-sm text-text-muted mb-1">Display Order</label>
             <input
               type="number"
               value={form.display_order}
-              onChange={e => setForm(f => ({ ...f, display_order: parseInt(e.target.value) || 0 }))}
-              className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
+              onChange={e =>
+                setForm(f => ({ ...f, display_order: parseInt(e.target.value) || 0 }))
+              }
+              className="w-24 bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
             />
           </div>
           <label className="flex items-center gap-2 mt-5 cursor-pointer">
@@ -169,7 +182,7 @@ export default function NewVideoPage() {
             disabled={saving}
             className="bg-accent text-black px-6 py-2 rounded font-semibold hover:bg-accent/90 disabled:opacity-50 text-sm"
           >
-            {saving ? 'Saving...' : 'Save Video'}
+            {saving ? 'Saving...' : isEdit ? 'Save Changes' : 'Create PDF'}
           </button>
           <button
             type="button"

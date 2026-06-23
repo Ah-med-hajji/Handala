@@ -8,10 +8,10 @@ export const LOCALE_LABELS: Record<Locale, string> = {
   es: 'Español',
 };
 
-// Data rows have *_ar / *_en columns. For ar, return the Arabic value;
-// for any other locale (en, fr, es), return the English value, falling back
-// to Arabic if English is empty. Once *_fr / *_es columns are added to the
-// schema, switch this helper to pick those when available.
+// Picks a translated field off a DB row that carries *_ar / *_en / *_fr / *_es
+// columns. For the requested locale, prefer that locale's column. Otherwise
+// walk a fallback chain: locale → en → ar. Treats null / empty strings as
+// "not translated" so a half-populated row still renders the AR/EN source.
 export function pickLocaleField(
   record: object | null | undefined,
   field: string,
@@ -19,9 +19,15 @@ export function pickLocaleField(
 ): string {
   if (!record) return '';
   const rec = record as Record<string, unknown>;
-  const ar = rec[`${field}_ar`];
-  const en = rec[`${field}_en`];
-  if (locale === 'ar') return typeof ar === 'string' ? ar : '';
-  if (typeof en === 'string' && en.length > 0) return en;
-  return typeof ar === 'string' ? ar : '';
+  const get = (suffix: string) => {
+    const v = rec[`${field}_${suffix}`];
+    return typeof v === 'string' && v.length > 0 ? v : '';
+  };
+
+  if (locale === 'ar') return get('ar');
+  const preferred = get(locale);
+  if (preferred) return preferred;
+  const english = get('en');
+  if (english) return english;
+  return get('ar');
 }

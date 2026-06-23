@@ -125,8 +125,12 @@ describe('content-actions (mock mode)', () => {
     const result = await updateSiteContent('about_naji', {
       title_ar: 'عن ناجي',
       title_en: 'About Naji',
+      title_fr: '',
+      title_es: '',
       content_ar: 'نص عربي',
       content_en: 'English text',
+      content_fr: '',
+      content_es: '',
     });
     expect(result.success).toBe(true);
   });

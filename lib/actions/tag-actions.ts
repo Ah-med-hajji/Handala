@@ -8,6 +8,8 @@ import { z } from 'zod';
 const tagSchema = z.object({
   name_ar: z.string().min(1),
   name_en: z.string().optional(),
+  name_fr: z.string().optional(),
+  name_es: z.string().optional(),
   slug: z.string().min(1),
 });
 
@@ -20,6 +22,8 @@ export async function createTag(input: z.infer<typeof tagSchema>) {
   const { error } = await supabase.from('tags').insert({
     name_ar: data.name_ar,
     name_en: data.name_en || null,
+    name_fr: data.name_fr || null,
+    name_es: data.name_es || null,
     slug: data.slug,
   });
 

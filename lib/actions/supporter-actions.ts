@@ -8,10 +8,14 @@ import { z } from 'zod';
 const supporterSchema = z.object({
   name_ar: z.string().min(1, 'Arabic name is required'),
   name_en: z.string().optional(),
+  name_fr: z.string().optional(),
+  name_es: z.string().optional(),
   url: z.string().optional(),
   logo_url: z.string().optional(),
   description_ar: z.string().optional(),
   description_en: z.string().optional(),
+  description_fr: z.string().optional(),
+  description_es: z.string().optional(),
   display_order: z.number().default(0),
   is_published: z.boolean().default(true),
 });
@@ -26,10 +30,14 @@ export async function createSupporter(input: SupporterInput) {
   const { error } = await supabase.from('supporters').insert({
     ...data,
     name_en: data.name_en || null,
+    name_fr: data.name_fr || null,
+    name_es: data.name_es || null,
     url: data.url || null,
     logo_url: data.logo_url || null,
     description_ar: data.description_ar || null,
     description_en: data.description_en || null,
+    description_fr: data.description_fr || null,
+    description_es: data.description_es || null,
   });
   if (error) return { success: false, error: error.message };
   revalidatePath('/ar/supporters');
@@ -47,10 +55,14 @@ export async function updateSupporter(id: string, input: SupporterInput) {
     .update({
       ...data,
       name_en: data.name_en || null,
+      name_fr: data.name_fr || null,
+      name_es: data.name_es || null,
       url: data.url || null,
       logo_url: data.logo_url || null,
       description_ar: data.description_ar || null,
       description_en: data.description_en || null,
+      description_fr: data.description_fr || null,
+      description_es: data.description_es || null,
     })
     .eq('id', id);
   if (error) return { success: false, error: error.message };

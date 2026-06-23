@@ -90,6 +90,15 @@
   "byNaji": {
     "translationComingSoon": "الترجمة قريبًا. يرجى عرض هذه الصفحة بالعربية للنص الكامل."
   },
+  "aboutAssassination": {
+    "tabs": {
+      "article": "القصة",
+      "documents": "الوثائق"
+    },
+    "openPdf": "فتح الملف",
+    "emptyDocuments": "لم تُضَف وثائق بعد.",
+    "untitledPdf": "وثيقة بلا عنوان"
+  },
   "common": {
     "loading": "جارٍ التحميل...",
     "error": "حدث خطأ",

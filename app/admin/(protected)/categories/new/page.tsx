@@ -19,9 +19,13 @@ export default function NewCategoryPage() {
   const [form, setForm] = useState({
     name_ar: '',
     name_en: '',
+    name_fr: '',
+    name_es: '',
     slug: '',
     description_ar: '',
     description_en: '',
+    description_fr: '',
+    description_es: '',
     cover_image_url: '',
     display_order: 0,
     is_published: true,
@@ -50,24 +54,42 @@ export default function NewCategoryPage() {
     <div className="p-8 max-w-2xl">
       <h1 className="text-2xl font-bold mb-6">New Category</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm text-text-muted mb-1">Arabic Name *</label>
-          <input
-            value={form.name_ar}
-            onChange={e => setForm(f => ({ ...f, name_ar: e.target.value }))}
-            className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
-            dir="rtl"
-            required
-          />
-        </div>
-        <div>
-          <label className="block text-sm text-text-muted mb-1">English Name *</label>
-          <input
-            value={form.name_en}
-            onChange={e => handleNameEn(e.target.value)}
-            className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
-            required
-          />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm text-text-muted mb-1">Arabic Name *</label>
+            <input
+              value={form.name_ar}
+              onChange={e => setForm(f => ({ ...f, name_ar: e.target.value }))}
+              className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
+              dir="rtl"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm text-text-muted mb-1">English Name *</label>
+            <input
+              value={form.name_en}
+              onChange={e => handleNameEn(e.target.value)}
+              className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm text-text-muted mb-1">French Name</label>
+            <input
+              value={form.name_fr}
+              onChange={e => setForm(f => ({ ...f, name_fr: e.target.value }))}
+              className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
+            />
+          </div>
+          <div>
+            <label className="block text-sm text-text-muted mb-1">Spanish Name</label>
+            <input
+              value={form.name_es}
+              onChange={e => setForm(f => ({ ...f, name_es: e.target.value }))}
+              className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
+            />
+          </div>
         </div>
         <div>
           <label className="block text-sm text-text-muted mb-1">Slug</label>
@@ -78,24 +100,44 @@ export default function NewCategoryPage() {
             required
           />
         </div>
-        <div>
-          <label className="block text-sm text-text-muted mb-1">Arabic Description</label>
-          <textarea
-            value={form.description_ar}
-            onChange={e => setForm(f => ({ ...f, description_ar: e.target.value }))}
-            rows={3}
-            className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-none"
-            dir="rtl"
-          />
-        </div>
-        <div>
-          <label className="block text-sm text-text-muted mb-1">English Description</label>
-          <textarea
-            value={form.description_en}
-            onChange={e => setForm(f => ({ ...f, description_en: e.target.value }))}
-            rows={3}
-            className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-none"
-          />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm text-text-muted mb-1">Arabic Description</label>
+            <textarea
+              value={form.description_ar}
+              onChange={e => setForm(f => ({ ...f, description_ar: e.target.value }))}
+              rows={3}
+              className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-none"
+              dir="rtl"
+            />
+          </div>
+          <div>
+            <label className="block text-sm text-text-muted mb-1">English Description</label>
+            <textarea
+              value={form.description_en}
+              onChange={e => setForm(f => ({ ...f, description_en: e.target.value }))}
+              rows={3}
+              className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-none"
+            />
+          </div>
+          <div>
+            <label className="block text-sm text-text-muted mb-1">French Description</label>
+            <textarea
+              value={form.description_fr}
+              onChange={e => setForm(f => ({ ...f, description_fr: e.target.value }))}
+              rows={3}
+              className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-none"
+            />
+          </div>
+          <div>
+            <label className="block text-sm text-text-muted mb-1">Spanish Description</label>
+            <textarea
+              value={form.description_es}
+              onChange={e => setForm(f => ({ ...f, description_es: e.target.value }))}
+              rows={3}
+              className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-none"
+            />
+          </div>
         </div>
         <ImageUpload
           bucket="categories"

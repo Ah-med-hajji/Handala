@@ -90,6 +90,15 @@
   "byNaji": {
     "translationComingSoon": "Traducción próximamente. Consulta esta página en árabe para ver el texto completo."
   },
+  "aboutAssassination": {
+    "tabs": {
+      "article": "El relato",
+      "documents": "Documentos"
+    },
+    "openPdf": "Abrir el PDF",
+    "emptyDocuments": "Aún no se han añadido documentos.",
+    "untitledPdf": "Documento sin título"
+  },
   "common": {
     "loading": "Cargando...",
     "error": "Se ha producido un error",

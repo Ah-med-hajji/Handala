@@ -1,4 +1,4 @@
-import type { Category, Tag, Cartoon, CartoonWithRelations, Video, Submission, SiteContent, Supporter } from '@/types';
+import type { Category, Tag, Cartoon, CartoonWithRelations, Video, Submission, SiteContent, Supporter, AssassinationPdf } from '@/types';
 
 // ─── Categories ────────────────────────────────────────────────────────────────
 
@@ -315,6 +315,45 @@ export const MOCK_SUPPORTERS: Supporter[] = [
     display_order: 3,
     is_published: true,
     created_at: '2024-01-01T00:00:00Z',
+  },
+];
+
+// ─── Assassination PDFs (catalogue on the About-Assassination page, tab 2) ──
+
+export const MOCK_ASSASSINATION_PDFS: AssassinationPdf[] = [
+  {
+    id: 'pdf-01',
+    title_ar: 'تقرير لجنة التحقيق في اغتيال ناجي العلي',
+    title_en: 'Inquiry Report on the Assassination of Naji Al-Ali',
+    title_fr: null,
+    title_es: null,
+    description_ar: 'مستند توضيحي للتحقيقات الأولية في حادثة الاغتيال.',
+    description_en: 'Document outlining the initial investigation into the assassination.',
+    description_fr: null,
+    description_es: null,
+    pdf_url: 'https://www.africau.edu/images/default/sample.pdf',
+    thumbnail_url: 'https://picsum.photos/seed/pdf-01/400/520',
+    display_order: 1,
+    is_published: true,
+    created_at: '2024-01-01T00:00:00Z',
+    updated_at: '2024-01-01T00:00:00Z',
+  },
+  {
+    id: 'pdf-02',
+    title_ar: 'شهادات معاصرين من جريدة القبس',
+    title_en: 'Contemporaneous Accounts from Al-Qabas',
+    title_fr: null,
+    title_es: null,
+    description_ar: 'مجموعة من الشهادات المنشورة في الصحيفة التي عمل بها ناجي العلي.',
+    description_en: 'Collected accounts published by the newspaper Naji Al-Ali worked for.',
+    description_fr: null,
+    description_es: null,
+    pdf_url: 'https://www.africau.edu/images/default/sample.pdf',
+    thumbnail_url: 'https://picsum.photos/seed/pdf-02/400/520',
+    display_order: 2,
+    is_published: true,
+    created_at: '2024-01-01T00:00:00Z',
+    updated_at: '2024-01-01T00:00:00Z',
   },
 ];
 

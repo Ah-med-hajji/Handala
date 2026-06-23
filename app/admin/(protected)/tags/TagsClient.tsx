@@ -9,6 +9,8 @@ interface TagWithCount {
   id: string;
   name_ar: string;
   name_en: string | null;
+  name_fr?: string | null;
+  name_es?: string | null;
   slug: string;
   usage_count: number;
 }
@@ -17,6 +19,8 @@ export default function TagsClient({ tags }: { tags: TagWithCount[] }) {
   const router = useRouter();
   const [nameAr, setNameAr] = useState('');
   const [nameEn, setNameEn] = useState('');
+  const [nameFr, setNameFr] = useState('');
+  const [nameEs, setNameEs] = useState('');
   const [adding, setAdding] = useState(false);
   const [error, setError] = useState('');
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -31,10 +35,18 @@ export default function TagsClient({ tags }: { tags: TagWithCount[] }) {
     setAdding(true);
     setError('');
     const slug = generateSlug(nameEn || nameAr);
-    const result = await createTag({ name_ar: nameAr.trim(), name_en: nameEn.trim() || undefined, slug });
+    const result = await createTag({
+      name_ar: nameAr.trim(),
+      name_en: nameEn.trim() || undefined,
+      name_fr: nameFr.trim() || undefined,
+      name_es: nameEs.trim() || undefined,
+      slug,
+    });
     if (result.success) {
       setNameAr('');
       setNameEn('');
+      setNameFr('');
+      setNameEs('');
       router.refresh();
     } else {
       setError(result.error || 'Failed to create tag');
@@ -60,26 +72,46 @@ export default function TagsClient({ tags }: { tags: TagWithCount[] }) {
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-6">Tags</h1>
 
-      <form onSubmit={handleAdd} className="bg-card border border-border rounded-lg p-4 mb-6 flex gap-3 items-end">
-        <div className="flex-1">
-          <label className="block text-xs text-text-muted mb-1">Arabic Name *</label>
-          <input
-            value={nameAr}
-            onChange={e => setNameAr(e.target.value)}
-            className="w-full bg-background border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
-            placeholder="الاسم بالعربية"
-            dir="rtl"
-            required
-          />
-        </div>
-        <div className="flex-1">
-          <label className="block text-xs text-text-muted mb-1">English Name</label>
-          <input
-            value={nameEn}
-            onChange={e => setNameEn(e.target.value)}
-            className="w-full bg-background border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
-            placeholder="English name"
-          />
+      <form onSubmit={handleAdd} className="bg-card border border-border rounded-lg p-4 mb-6 space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div>
+            <label className="block text-xs text-text-muted mb-1">Arabic Name *</label>
+            <input
+              value={nameAr}
+              onChange={e => setNameAr(e.target.value)}
+              className="w-full bg-background border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
+              placeholder="الاسم بالعربية"
+              dir="rtl"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-xs text-text-muted mb-1">English Name</label>
+            <input
+              value={nameEn}
+              onChange={e => setNameEn(e.target.value)}
+              className="w-full bg-background border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
+              placeholder="English name"
+            />
+          </div>
+          <div>
+            <label className="block text-xs text-text-muted mb-1">French Name</label>
+            <input
+              value={nameFr}
+              onChange={e => setNameFr(e.target.value)}
+              className="w-full bg-background border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
+              placeholder="Nom français"
+            />
+          </div>
+          <div>
+            <label className="block text-xs text-text-muted mb-1">Spanish Name</label>
+            <input
+              value={nameEs}
+              onChange={e => setNameEs(e.target.value)}
+              className="w-full bg-background border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
+              placeholder="Nombre español"
+            />
+          </div>
         </div>
         <button
           type="submit"
@@ -98,6 +130,8 @@ export default function TagsClient({ tags }: { tags: TagWithCount[] }) {
             <tr className="text-text-muted">
               <th className="text-start p-3">Arabic</th>
               <th className="text-start p-3">English</th>
+              <th className="text-start p-3">French</th>
+              <th className="text-start p-3">Spanish</th>
               <th className="text-start p-3">Slug</th>
               <th className="text-start p-3">Used In</th>
               <th className="p-3" />
@@ -108,6 +142,8 @@ export default function TagsClient({ tags }: { tags: TagWithCount[] }) {
               <tr key={tag.id} className="border-b border-border/50 hover:bg-[#222]">
                 <td className="p-3 text-white" dir="rtl">{tag.name_ar}</td>
                 <td className="p-3 text-text-muted">{tag.name_en || '–'}</td>
+                <td className="p-3 text-text-muted">{tag.name_fr || '–'}</td>
+                <td className="p-3 text-text-muted">{tag.name_es || '–'}</td>
                 <td className="p-3 text-text-muted font-mono text-xs">{tag.slug}</td>
                 <td className="p-3 text-text-muted">{tag.usage_count} cartoons</td>
                 <td className="p-3">

@@ -1,6 +1,7 @@
-import { getSiteContent } from '@/lib/content';
+import { getSiteContent, getPublishedAssassinationPdfs } from '@/lib/content';
 import { getTranslations } from 'next-intl/server';
 import { pickLocaleField } from '@/lib/i18n-utils';
+import AboutAssassinationTabs from '@/components/about-assassination/AboutAssassinationTabs';
 
 const DEFAULT_AR = `في الثاني والعشرين من يوليو/تموز 1987، تعرّض ناجي العلي لمحاولة اغتيال في لندن قرب مكتب جريدة "القبس" التي كان يعمل فيها، حيث أُطلقت رصاصة على رأسه. ظلّ في غيبوبة خمسة أسابيع، ثم رحل في التاسع والعشرين من أغسطس/آب من العام نفسه.
 
@@ -19,7 +20,10 @@ export default async function AboutAssassinationPage({
 }: {
   params: { locale: string };
 }) {
-  const content = await getSiteContent('about_assassination');
+  const [content, pdfs] = await Promise.all([
+    getSiteContent('about_assassination'),
+    getPublishedAssassinationPdfs(),
+  ]);
   const t = await getTranslations({ locale });
 
   const title =
@@ -32,17 +36,18 @@ export default async function AboutAssassinationPage({
   const paragraphs = body.split('\n\n').filter(Boolean);
 
   return (
-    <div className="min-h-screen px-4 py-12">
-      <article className="max-w-2xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">{title}</h1>
-        <div className="space-y-4">
-          {paragraphs.map((p, i) => (
-            <p key={i} className="text-text-primary leading-relaxed text-lg text-justify">
-              {p}
-            </p>
-          ))}
-        </div>
-      </article>
-    </div>
+    <AboutAssassinationTabs
+      locale={locale}
+      title={title}
+      paragraphs={paragraphs}
+      pdfs={pdfs}
+      labels={{
+        articleTab: t('aboutAssassination.tabs.article'),
+        documentsTab: t('aboutAssassination.tabs.documents'),
+        emptyDocuments: t('aboutAssassination.emptyDocuments'),
+        openPdf: t('aboutAssassination.openPdf'),
+        untitledPdf: t('aboutAssassination.untitledPdf'),
+      }}
+    />
   );
 }

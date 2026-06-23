@@ -9,9 +9,13 @@ import type { Supporter } from '@/types';
 type SupporterForm = {
   name_ar: string;
   name_en: string;
+  name_fr: string;
+  name_es: string;
   url: string;
   description_ar: string;
   description_en: string;
+  description_fr: string;
+  description_es: string;
   display_order: number;
   is_published: boolean;
 };
@@ -19,9 +23,13 @@ type SupporterForm = {
 const emptyForm: SupporterForm = {
   name_ar: '',
   name_en: '',
+  name_fr: '',
+  name_es: '',
   url: '',
   description_ar: '',
   description_en: '',
+  description_fr: '',
+  description_es: '',
   display_order: 0,
   is_published: true,
 };
@@ -47,9 +55,13 @@ export default function SupportersClient({ supporters }: { supporters: Supporter
     setForm({
       name_ar: s.name_ar,
       name_en: s.name_en || '',
+      name_fr: s.name_fr || '',
+      name_es: s.name_es || '',
       url: s.url || '',
       description_ar: s.description_ar || '',
       description_en: s.description_en || '',
+      description_fr: s.description_fr || '',
+      description_es: s.description_es || '',
       display_order: s.display_order,
       is_published: s.is_published,
     });
@@ -106,7 +118,7 @@ export default function SupportersClient({ supporters }: { supporters: Supporter
         <div className="bg-card border border-border rounded-lg p-6 mb-6">
           <h2 className="font-bold text-white mb-4">{editing ? 'Edit Supporter' : 'New Supporter'}</h2>
           <form onSubmit={save} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm text-text-muted mb-1">Arabic Name *</label>
                 <input
@@ -125,6 +137,22 @@ export default function SupportersClient({ supporters }: { supporters: Supporter
                   className="w-full bg-background border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
                 />
               </div>
+              <div>
+                <label className="block text-sm text-text-muted mb-1">French Name</label>
+                <input
+                  value={form.name_fr}
+                  onChange={e => setForm(f => ({ ...f, name_fr: e.target.value }))}
+                  className="w-full bg-background border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-text-muted mb-1">Spanish Name</label>
+                <input
+                  value={form.name_es}
+                  onChange={e => setForm(f => ({ ...f, name_es: e.target.value }))}
+                  className="w-full bg-background border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
+                />
+              </div>
             </div>
 
             <div>
@@ -138,25 +166,44 @@ export default function SupportersClient({ supporters }: { supporters: Supporter
               />
             </div>
 
-            <div>
-              <label className="block text-sm text-text-muted mb-1">Arabic Description</label>
-              <textarea
-                value={form.description_ar}
-                onChange={e => setForm(f => ({ ...f, description_ar: e.target.value }))}
-                rows={2}
-                className="w-full bg-background border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-none"
-                dir="rtl"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm text-text-muted mb-1">English Description</label>
-              <textarea
-                value={form.description_en}
-                onChange={e => setForm(f => ({ ...f, description_en: e.target.value }))}
-                rows={2}
-                className="w-full bg-background border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-none"
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm text-text-muted mb-1">Arabic Description</label>
+                <textarea
+                  value={form.description_ar}
+                  onChange={e => setForm(f => ({ ...f, description_ar: e.target.value }))}
+                  rows={2}
+                  className="w-full bg-background border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-none"
+                  dir="rtl"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-text-muted mb-1">English Description</label>
+                <textarea
+                  value={form.description_en}
+                  onChange={e => setForm(f => ({ ...f, description_en: e.target.value }))}
+                  rows={2}
+                  className="w-full bg-background border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-text-muted mb-1">French Description</label>
+                <textarea
+                  value={form.description_fr}
+                  onChange={e => setForm(f => ({ ...f, description_fr: e.target.value }))}
+                  rows={2}
+                  className="w-full bg-background border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-text-muted mb-1">Spanish Description</label>
+                <textarea
+                  value={form.description_es}
+                  onChange={e => setForm(f => ({ ...f, description_es: e.target.value }))}
+                  rows={2}
+                  className="w-full bg-background border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-none"
+                />
+              </div>
             </div>
 
             <div className="flex items-center gap-6">

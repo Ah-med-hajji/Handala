@@ -5,7 +5,7 @@ import { MOCK_TAGS, MOCK_CARTOONS } from '@/lib/mock-data';
 const USE_MOCK = process.env.NEXT_PUBLIC_USE_MOCK_DATA === 'true';
 
 export default async function AdminTagsPage() {
-  let tagsWithCount: { id: string; name_ar: string; name_en: string | null; slug: string; created_at: string; usage_count: number }[];
+  let tagsWithCount: { id: string; name_ar: string; name_en: string | null; name_fr?: string | null; name_es?: string | null; slug: string; created_at: string; usage_count: number }[];
 
   if (USE_MOCK) {
     tagsWithCount = MOCK_TAGS.map(t => ({

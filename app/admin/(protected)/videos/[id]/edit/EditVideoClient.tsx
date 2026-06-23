@@ -10,8 +10,12 @@ export default function EditVideoClient({ video }: { video: Video }) {
   const [form, setForm] = useState({
     title_ar: video.title_ar,
     title_en: video.title_en || '',
+    title_fr: video.title_fr || '',
+    title_es: video.title_es || '',
     description_ar: video.description_ar || '',
     description_en: video.description_en || '',
+    description_fr: video.description_fr || '',
+    description_es: video.description_es || '',
     youtube_url: video.youtube_url,
     display_order: video.display_order,
     is_published: video.is_published,
@@ -48,21 +52,41 @@ export default function EditVideoClient({ video }: { video: Video }) {
             </div>
           )}
         </div>
-        <div>
-          <label className="block text-sm text-text-muted mb-1">Arabic Title *</label>
-          <input value={form.title_ar} onChange={e => setForm(f => ({ ...f, title_ar: e.target.value }))} className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent" dir="rtl" required />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm text-text-muted mb-1">Arabic Title *</label>
+            <input value={form.title_ar} onChange={e => setForm(f => ({ ...f, title_ar: e.target.value }))} className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent" dir="rtl" required />
+          </div>
+          <div>
+            <label className="block text-sm text-text-muted mb-1">English Title</label>
+            <input value={form.title_en} onChange={e => setForm(f => ({ ...f, title_en: e.target.value }))} className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent" />
+          </div>
+          <div>
+            <label className="block text-sm text-text-muted mb-1">French Title</label>
+            <input value={form.title_fr} onChange={e => setForm(f => ({ ...f, title_fr: e.target.value }))} className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent" />
+          </div>
+          <div>
+            <label className="block text-sm text-text-muted mb-1">Spanish Title</label>
+            <input value={form.title_es} onChange={e => setForm(f => ({ ...f, title_es: e.target.value }))} className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent" />
+          </div>
         </div>
-        <div>
-          <label className="block text-sm text-text-muted mb-1">English Title</label>
-          <input value={form.title_en} onChange={e => setForm(f => ({ ...f, title_en: e.target.value }))} className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent" />
-        </div>
-        <div>
-          <label className="block text-sm text-text-muted mb-1">Arabic Description</label>
-          <textarea value={form.description_ar} onChange={e => setForm(f => ({ ...f, description_ar: e.target.value }))} rows={3} className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-none" dir="rtl" />
-        </div>
-        <div>
-          <label className="block text-sm text-text-muted mb-1">English Description</label>
-          <textarea value={form.description_en} onChange={e => setForm(f => ({ ...f, description_en: e.target.value }))} rows={3} className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-none" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm text-text-muted mb-1">Arabic Description</label>
+            <textarea value={form.description_ar} onChange={e => setForm(f => ({ ...f, description_ar: e.target.value }))} rows={3} className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-none" dir="rtl" />
+          </div>
+          <div>
+            <label className="block text-sm text-text-muted mb-1">English Description</label>
+            <textarea value={form.description_en} onChange={e => setForm(f => ({ ...f, description_en: e.target.value }))} rows={3} className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-none" />
+          </div>
+          <div>
+            <label className="block text-sm text-text-muted mb-1">French Description</label>
+            <textarea value={form.description_fr} onChange={e => setForm(f => ({ ...f, description_fr: e.target.value }))} rows={3} className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-none" />
+          </div>
+          <div>
+            <label className="block text-sm text-text-muted mb-1">Spanish Description</label>
+            <textarea value={form.description_es} onChange={e => setForm(f => ({ ...f, description_es: e.target.value }))} rows={3} className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-accent resize-none" />
+          </div>
         </div>
         <div className="flex items-center gap-4">
           <div>

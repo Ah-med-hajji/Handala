@@ -16,8 +16,11 @@ export function ImageUpload({ currentUrl, onUpload, label = 'Image', bucket }: I
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleFile = async (file: File) => {
-    if (file.size > 5 * 1024 * 1024) {
-      setError('File too large (max 5MB)');
+    // Vercel serverless functions reject bodies over ~4.5 MB before the route
+    // even runs, returning a plain-text "Request Entity Too Large" page that
+    // fails to parse as JSON on the client. Cap at 4 MB to stay safely below.
+    if (file.size > 4 * 1024 * 1024) {
+      setError('File too large (max 4MB). Compress the image and try again.');
       return;
     }
     setError(null);
@@ -29,9 +32,19 @@ export function ImageUpload({ currentUrl, onUpload, label = 'Image', bucket }: I
       formData.append('file', file);
       formData.append('bucket', bucket);
       const res = await fetch('/api/upload', { method: 'POST', body: formData });
-      const data = await res.json();
+      const text = await res.text();
+      let data: { url?: string; error?: string } = {};
+      try {
+        data = JSON.parse(text);
+      } catch {
+        throw new Error(
+          res.status === 413
+            ? 'File too large for the server. Use a smaller file.'
+            : `Upload failed (${res.status}): ${text.slice(0, 120)}`
+        );
+      }
       if (data.url) onUpload(data.url);
-      else throw new Error(data.error || 'Upload failed');
+      else throw new Error(data.error || `Upload failed (${res.status})`);
     } catch (e: any) {
       setError(e.message);
     } finally {
@@ -64,7 +77,7 @@ export function ImageUpload({ currentUrl, onUpload, label = 'Image', bucket }: I
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
             <p className="text-text-muted text-sm">Drop image here or click to upload</p>
-            <p className="text-text-muted text-xs mt-1">JPG, PNG, WEBP — max 5MB</p>
+            <p className="text-text-muted text-xs mt-1">JPG, PNG, WEBP — max 4MB</p>
           </div>
         )}
       </div>

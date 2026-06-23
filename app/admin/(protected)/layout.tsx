@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { href: '/admin/cartoons', label: 'Cartoons' },
   { href: '/admin/categories', label: 'Categories' },
   { href: '/admin/videos', label: 'Videos' },
+  { href: '/admin/assassination-pdfs', label: 'Assassination PDFs' },
   { href: '/admin/submissions', label: 'Submissions' },
   { href: '/admin/tags', label: 'Tags' },
   { href: '/admin/content', label: 'Page Content' },
